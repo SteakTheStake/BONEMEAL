@@ -1,0 +1,211 @@
+body {
+    background-color: #191919;
+    color: #ffffff;
+}
+
+#resultArea {
+    background-color: #191919;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.container{
+    padding:3em;
+    margin: 20px 15px 15px 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    align-content: center;
+    position: absolute;
+}
+
+.bonemeal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.6);
+    animation: splash 5s normal forwards ease-in-out;
+}
+
+.navbar{
+    width: 150px;
+    height: 150px;
+    left: 80px;
+    line-height: 150px;
+    border-radius: 15%;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+    transition: 0.24s;
+    position: relative;
+    background: url('/static/img/bonemeal-favicon.png');
+    background-size:150px 150px;
+}
+.navbar:hover{
+    opacity: 0.6;
+    filter: alpha(opacity=50);
+}
+.navbar .menu{
+    list-style: none;
+    position: absolute;
+    top:-175px;
+    left: -95px;
+    margin: 0;
+    padding: 0;
+    border:150px solid transparent;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 1.4s;
+}
+
+.navbar:hover .menu {
+    transition: transform 0.3s;
+    transform: scale(1);
+    z-index: 1;
+}
+
+.navbar .menu li{
+    position: absolute;
+    top: 0;
+    left: -80px;
+    transform-origin: 100px 100px;
+    transition: all 0.5s;
+}
+.navbar .menu li a{
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 8px;
+    position: absolute;
+    transition: 0.6s;
+}
+.navbar:hover .menu li:nth-child(1){
+    transition-delay: 0.02s;
+    transform: rotate(85deg);
+}
+.navbar:hover .menu li:nth-child(1) a{
+    transition-delay: 0.04s;
+    transform: rotate(635deg);
+}
+.navbar:hover .menu li:nth-child(2){
+    transition-delay: 0.04s;
+    transform: rotate(125deg);
+}
+.navbar:hover .menu li:nth-child(2) a{
+    transition-delay: 0.08s;
+    transform: rotate(595deg);
+}
+.navbar:hover .menu li:nth-child(3){
+    transition-delay: 0.06s;
+    transform: rotate(165deg);
+}
+.navbar:hover .menu li:nth-child(3) a{
+    transition-delay: 0.12s;
+    transform: rotate(555deg);
+}
+.navbar:hover .menu li:nth-child(4){
+    transition-delay: 0.08s;
+    transform: rotate(205deg);
+}
+.navbar:hover .menu li:nth-child(4) a{
+    transition-delay: 0.16s;
+    transform: rotate(515deg);
+}
+.navbar:hover .menu li:nth-child(5){
+    transition-delay: 0.1s;
+    transform: rotate(245deg);
+}
+.navbar:hover .menu li:nth-child(5) a{
+    transition-delay: 0.2s;
+    transform: rotate(475deg);
+}
+.navbar:hover .menu li:nth-child(6){
+    transition-delay: 0.12s;
+    transform: rotate(285deg);
+}
+.navbar:hover .menu li:nth-child(6) a{
+    transition-delay: 0.24s;
+    transform: rotate(435deg);
+}
+.navbar:hover .menu li:nth-child(7){
+    transition-delay: 0.14s;
+    transform: rotate(325deg);
+}
+.navbar:hover .menu li:nth-child(7) a{
+    transition-delay: 0.28s;
+    transform: rotate(395deg);
+}
+.navbar:hover .menu li:nth-child(8){
+    transition-delay: 0.16s;
+    transform: rotate(365deg);
+}
+.navbar:hover .menu li:nth-child(8) a{
+    transition-delay: 0.32s;
+    transform: rotate(355deg);
+}
+.navbar:hover .menu li:nth-child(9){
+    transition-delay: 0.18s;
+    transform: rotate(405deg);
+}
+.navbar:hover .menu li:nth-child(9) a{
+    transition-delay: 0.36s;
+    transform: rotate(315deg);
+}
+
+.Resize {
+    background: #444565;
+}
+
+.Split {
+    background: #444565;
+}
+
+.Move {
+    background: #444565;
+}
+
+.Tile {
+    background: #444565;
+}
+.Merge {
+    background: #444565;
+}
+
+.placeholder {
+    background: #444565;
+}
+
+.placeholder {
+    background: #444565;
+}
+
+.placeholder {
+    background: #444565;
+}
+
+.Summit {
+    background: #444565;
+}
+
+.float {
+    padding: 25px;
+    position: fixed;
+    top: 5px;
+    left: 15px;
+    width: 5px;
+    height: auto;
+}
+
+.title-center {
+    text-align: center;
+    color: white;
+}
+
+.sub-title-center {
+    text-align: center;
+    color: #86989B;
+}

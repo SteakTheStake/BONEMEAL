@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (Bootstrap and custom CSS links) ... -->
+    <title>BONEMEAL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="bonemeal">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="navbar">
+                    <ul class="menu">
+                        <li><a href="/resize" class="Resize">Resize</a></li>
+                        <li><a href="/split_ctm" class="Split">Split CTM</a></li>
+                        <li><a href="/convert_ctm" class="Move">Convert CTM</a></li>
+                        <li><a href="/tile_textures" class="Tile">Tile Textures</a></li>
+                        <li><a href="/merge_ctm" class="Merge">Merge CTM</a></li>
+                        <li><a href="/resize" class="placeholder"></a></li>
+                        <li><a href="/resize" class="placeholder"></a></li>
+                        <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
+                        <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <h1 class="title-center">BONEMEAL</h1>
+        <h3 class="sub-title-center">Speed Up Your Workflow</h3>
+    </div>
+</div>
+<!-- JavaScript for interactive elements -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
