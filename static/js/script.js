@@ -15,3 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         menu.classList.toggle('show');
     });
 });
+
+function delay (URL) {
+    setTimeout( function() { window.location = URL }, 250 );
+}

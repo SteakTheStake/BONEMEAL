@@ -38,19 +38,21 @@
 </div>
 <div class="container">
     <div class="bonemeal">
+        <img src="/static/img/bonemeal-favicon.png" class="bonemeal-glit">
+        <div class="bonemeal-img">
         <div id="hoverSound" class="row glow-gui">
             <div class="col-md-6 glow-gui">
                 <div class="navbar glow-gui">
                     <ul id="clickSound" class="menu glow-gui">
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/resize" class="Resize">Resize</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/split_ctm" class="Split">Split CTM</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/convert_ctm" class="Move">Convert CTM</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/tile_textures" class="Tile">Tile Textures</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/merge_ctm" class="Merge">Merge CTM</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="#" class="placeholder">Coming Soon</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="#" class="placeholder">Coming Soon</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
-                        <li><a onLoad="setTimeout('delayer()', 5000)" href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
+                        <li><a href="javascript:delay('/resize')" class="Resize">Resize</a></li>
+                        <li><a href="javascript:delay('/split_ctm')" class="Split">Split CTM</a></li>
+                        <li><a href="javascript:delay('/convert_ctm')" class="Move">Convert CTM</a></li>
+                        <li><a href="javascript:delay('/tile_textures')" class="Tile">Tile Textures</a></li>
+                        <li><a href="javascript:delay('/merge_ctm')" class="Merge">Merge CTM</a></li>
+                        <li><a href="javascript:delay('#')" class="placeholder">Coming Soon</a></li>
+                        <li><a href="javascript:delay('#')" class="placeholder">Coming Soon</a></li>
+                        <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
+                        <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,6 +61,7 @@
         <br>
         <h1 class="title-center">BONEMEAL</h1>
         <h3 class="sub-title-center">Speed Up Your Workflow</h3>
+        </div>
     </div>
 </div>
 <footer class="bottom-div glow">

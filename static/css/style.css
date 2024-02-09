@@ -9,6 +9,9 @@
     src: url("/static/font/MinecraftBold.otf") format("opentype");
 }
 
+* {
+
+}
 
 body {
     background-color: #191919;
@@ -41,6 +44,31 @@ body {
     animation: splash 5s normal forwards ease-in-out;
 }
 
+.bonemeal-img{
+    z-index: -1;
+    position: absolute;
+    top: 25%;
+    left: 47%;
+    transform: translate(-50%, -50%) scale(1);
+    background: url('/static/img/bonemeal-favicon.png') no-repeat; /* Replace with your PNG image */
+}
+
+.bonemeal-img:hover {
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+}
+
+.bonemeal-glit {
+    z-index: 0;
+    position: absolute;
+    top: 25%;
+    left: 47%;
+    transform: translate(-50%, -50%) scale(1);
+    mix-blend-mode: screen;
+    background-blend-mode: screen;
+    animation: moveDown infinite 5s linear;
+    background: url('/static/img/enchanted_glint_item.png') repeat;
+}
 .navbar{
     width: 150px;
     height: 150px;
@@ -53,7 +81,6 @@ body {
     margin: auto;
     transition: 0.24s;
     position: relative;
-    background: url('/static/img/bonemeal-favicon.png');
     background-size:150px 150px;
 }
 .navbar:hover{
@@ -263,6 +290,7 @@ body {
     position: absolute;
     transform: rotate(10deg);
     transform-origin: top right;
+    -webkit-filter: saturate(100%) brightness(100%) hue-rotate(45deg) contrast(200%);
 }
 .rainbow:nth-child(1) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(67, 114, 168), 0 0 50px 25px rgba(133, 213, 255, 0.8), 50px 0 50px 25px rgba(114, 182, 182, 0.91), 130px 0 80px 40px white;
@@ -374,7 +402,7 @@ body {
     }
 }
 .h {
-    box-shadow: 0 0 50vh 40vh #090d0e;
+    box-shadow: 0 0 50vh 40vh #0d061c;
     width: 100vw;
     height: 0;
     bottom: 0;
@@ -383,7 +411,7 @@ body {
 }
 
 .v {
-    box-shadow: 0 0 35vw 25vw #090d0e;
+    box-shadow: 0 0 35vw 25vw #0d061c;
     width: 0;
     height: 100vh;
     bottom: 0;
@@ -428,4 +456,13 @@ body {
 
 .half-opacity {
     opacity: 50%;
+}
+
+@keyframes moveDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
 }
