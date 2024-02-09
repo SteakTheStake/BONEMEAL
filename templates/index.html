@@ -37,34 +37,43 @@
 <div class='v'></div>
 </div>
 <div class="container">
-    <div class="bonemeal glow-gui">
-        <div class="row glow-gui">
+    <div class="bonemeal">
+        <div id="hoverSound" class="row glow-gui">
             <div class="col-md-6 glow-gui">
                 <div class="navbar glow-gui">
-                    <ul class="menu glow-gui">
-                        <li><a href="/resize" class="Resize">Resize</a></li>
-                        <li><a href="/split_ctm" class="Split">Split CTM</a></li>
-                        <li><a href="/convert_ctm" class="Move">Convert CTM</a></li>
-                        <li><a href="/tile_textures" class="Tile">Tile Textures</a></li>
-                        <li><a href="/merge_ctm" class="Merge">Merge CTM</a></li>
-                        <li><a href="/resize" class="placeholder"></a></li>
-                        <li><a href="/resize" class="placeholder"></a></li>
-                        <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
-                        <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
+                    <ul id="clickSound" class="menu glow-gui">
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/resize" class="Resize">Resize</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/split_ctm" class="Split">Split CTM</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/convert_ctm" class="Move">Convert CTM</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/tile_textures" class="Tile">Tile Textures</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="/merge_ctm" class="Merge">Merge CTM</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="#" class="placeholder">Coming Soon</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="#" class="placeholder">Coming Soon</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
+                        <li><a onLoad="setTimeout('delayer()', 5000)" href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <br>
         <br>
-        <h1 class="title-center glow">BONEMEAL</h1>
-        <h3 class="sub-title-center glow">Speed Up Your Workflow</h3>
+        <h1 class="title-center">BONEMEAL</h1>
+        <h3 class="sub-title-center">Speed Up Your Workflow</h3>
     </div>
 </div>
+<footer class="bottom-div glow">
+    <div class="middle">
+        <div class="nobtn">
+            <p class="half-opacity">"Minecraft" is a trademark of Mojang. This site is not affiliated with Mojang or Microsoft.</p>
+            <p>©&nbsp;<span id="year"></span>&nbsp;Summit. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 <!-- JavaScript for interactive elements -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 </body>
 </html>
