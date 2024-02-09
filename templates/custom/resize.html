@@ -34,7 +34,7 @@
     <div class='v'></div>
 </div>
 <div class="container">
-    <div class="float"><a href="/"><img src="static/img/back.png" alt="Logo"></a></div>
+    <div id="clickSound" class="float"><a href="javascript:delay('/')"><img src="static/img/back.png" alt="Back"></a></div>
     <h1 class="text-center">RESIZE | BONEMEAL</h1>
     <h4 class="text-center">Resize textures in bulk and convert then to indexed color for better in-game performance</h4>
     <!-- File Upload -->
@@ -67,6 +67,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 <script>
     function addLog(message) {
         var logDiv = document.getElementById('logs');
