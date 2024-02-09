@@ -59,7 +59,7 @@ body {
     margin: auto;
     transition: 0.24s;
     position: relative;
-    background: url('/static/img/bonemeal-favicon.png');
+    background: url('/static/img/bonemeal.gif');
     background-size:150px 150px;
 }
 .navbar:hover{
