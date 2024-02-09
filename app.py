@@ -39,7 +39,7 @@ def resize():
 
                 # Call the resize script as a subprocess
                 process = subprocess.run(
-                    ['python', 'py/resize_script.py', file_path, str(percentage)],
+                    ['python', 'py/resize-script.py', file_path, str(percentage)],
                     capture_output=True, text=True)
                 output_messages.append(process.stdout)
 

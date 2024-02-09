@@ -40,7 +40,7 @@ def resize_images_in_tree(folder_path, percentage):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage: python resize_script.py <folder_path> <percentage>")
+        print("Usage: python resize-script.py <folder_path> <percentage>")
         sys.exit(1)
 
     folder_path = sys.argv[1]

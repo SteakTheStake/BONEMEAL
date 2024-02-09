@@ -9,22 +9,61 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
+<div class="rainbow-blur">
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='h'></div>
+    <div class='v'></div>
+</div>
 <div class="container">
+    <div class="float"><a href="/"><img src="static/img/back.png" alt="Logo"></a></div>
     <h1 class="text-center">Split CTM | BONEMEAL</h1>
-    <h4 class="text-center">Split CTM textures in bulk and store them in folders named after the base color file name <br/>(automatically renames files with correct extension such as _n or _s)</h4>
+    <h4 class="text-center">Split CTM textures in bulk and store them in folders named after the base color file name <br/>
+        (automatically renames files with correct extension such as _n or _s)</h4>
     <!-- File Upload -->
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form action="/split_ctm" method="post" enctype="multipart/form-data" id="splitCtmForm">
         <div class="form-group">
-            <label for="fileUpload">Upload texture file:</label>
-            <input type="file" class="form-control-file" id="fileUpload" name="file">
+            <label for="fileUpload1">Base Color Images:</label>
+            <input type="file" class="form-control-file" id="fileUpload1" name="files1" multiple>
         </div>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <div class="form-group">
+            <label for="fileUpload2">Normal Map Images:</label>
+            <input type="file" class="form-control-file" id="fileUpload2" name="files2" multiple>
+        </div>
+        <div class="form-group">
+            <label for="fileUpload3">Specular Map Images:</label>
+            <input type="file" class="form-control-file" id="fileUpload3" name="files3" multiple>
+        </div>
+        <button type="submit" class="btn btn-primary">Start Splitting</button>
     </form>
-    <!-- Trigger Python Script -->
-    <button id="runScript" class="btn btn-success">Run Script</button>
     <!-- Display Area -->
     <div id="resultArea" class="mt-4">
-        <!-- Results will be displayed here -->
+        {% if output %}
+            <div id="output">{{ output }}</div>
+        {% endif %}
+    </div>
+    <!-- Log Display Area -->
+    <div id="logArea" class="mt-4">
+        <h3>Activity Log</h3>
+        <div id="logs"></div>
     </div>
 </div>
 <!-- JavaScript for interactive elements -->
@@ -32,5 +71,32 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    function addLog(message) {
+        var logDiv = document.getElementById('logs');
+        var time = new Date().toLocaleTimeString();
+        logDiv.innerHTML += `<p>[${time}] ${message}</p>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addLog('Page loaded');
+
+        var fileInput = document.getElementById('fileUpload');
+        fileInput.addEventListener('change', function() {
+            var uploadedFiles = fileInput.files;
+            if (uploadedFiles.length > 0) {
+                var fileNames = Array.from(uploadedFiles).map(file => file.name).join(', ');
+                addLog(`Files uploaded: ${fileNames}`);
+            } else {
+                addLog('No files selected');
+            }
+        });
+
+        document.getElementById('resizeForm').addEventListener('submit', function() {
+            addLog('Form submitted');
+            // Additional actions or logs can be added here
+        });
+    });
+</script>
 </body>
 </html>
