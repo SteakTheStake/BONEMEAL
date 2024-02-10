@@ -73,5 +73,5 @@ def merge_ctm():
     return render_template('custom/merge_ctm.html')
 
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
