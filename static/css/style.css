@@ -45,12 +45,11 @@ body {
 }
 
 .bonemeal:hover {
-    filter: brightness(102%);
 }
 .navbar{
     width: 150px;
     height: 150px;
-    left: 30%;
+    left: 50%;
     line-height: 150px;
     border-radius: 15%;
     text-align: center;
@@ -62,7 +61,6 @@ body {
     background-size:150px 150px;
 }
 .navbar:hover{
-    filter: brightness(102%);
 }
 .navbar .menu{
     list-style: none;
@@ -216,7 +214,7 @@ body {
     background: rgba(170, 0, 255, 0.25);
     background-blend-mode: screen;
 }
-
+/*
 .neonText {
     color: #fff;
     text-shadow:
@@ -260,7 +258,7 @@ body {
 .pulsate {
     animation: pulsate 1.5s infinite alternate;
 }
-
+*/
 .float {
     padding: 25px;
     position: fixed;
@@ -411,7 +409,7 @@ body {
 }
 .rainbow-blur {
     transform: scale(1);
-    filter: blur(100px) saturate(125%) brightness(0.75);
+    opacity: 0.75;
 }
 
 .nobtn {

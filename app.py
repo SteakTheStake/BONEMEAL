@@ -4,8 +4,10 @@ import tempfile, subprocess
 
 from werkzeug.utils import secure_filename, send_from_directory
 from flask import Flask, request, render_template
+from flask import session, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = 'summit_mc_xyz'
 
 
 @app.route('/')
@@ -39,18 +41,31 @@ def resize():
 
                 # Call the resize script as a subprocess
                 process = subprocess.run(
-                    ['python', 'py/resize-script.py', file_path, str(percentage)],
+                    ['python', 'static/py/resize-script.py', file_path, str(percentage)],
                     capture_output=True, text=True)
                 output_messages.append(process.stdout)
 
         # Combine all messages for output
         output = "\n".join(output_messages)
+        session['resize_output'] = output
+        return redirect(url_for('resize_result'))
 
-        # Render the resize.html template with the output
-        return render_template('custom/resize.html', output=output)
+        # Redirect to the resize-result route
 
     # For a GET request, just render the template
     return render_template('custom/resize.html')
+
+
+@app.route('/resize-result', methods=['GET'])
+def resize_result():
+    if request.method == 'POST':
+        # In case of POST, retrieve data from the session or form
+        output = session.get('resize_output', 'No data available')
+    else:
+
+        output = 'No data available'
+
+    return render_template('custom/resize-result.html', output=output)
 
 
 @app.route('/split_ctm')

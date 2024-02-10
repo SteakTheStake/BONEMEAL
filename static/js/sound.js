@@ -5,13 +5,9 @@ document.getElementById('hoverSound').addEventListener('mouseenter', function() 
 });
 
 let clickAudioClip = new Audio('/static/sound/hoversound.mp3');
-document.getElementById('clickSound').addEventListener('mousedown', function() {
-    let image = document.getElementById('imageToScale');
-    let button = document.getElementById('scaleButton');
+document.getElementById('clickSound').addEventListener('mousedown', function(button) {
     clickAudioClip.play();
     button.addEventListener('click', function() {
-        // Increase the scale of the image by 15%
-        image.style.transform = 'scale(1.05)';
     });
 });
 
