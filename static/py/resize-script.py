@@ -2,14 +2,6 @@ import os
 import sys
 from PIL import Image
 
-# Blacklisted directories
-BLACKLISTED_DIRS = [
-    '/assets/minecraft/textures/environment',
-    '/assets/minecraft/textures/font',
-    '/assets/minecraft/textures/gui',
-    '/assets/minecraft/textures/misc'
-]
-
 
 def resize_image(image_path, percentage):
     try:
@@ -27,9 +19,6 @@ def resize_image(image_path, percentage):
 def resize_images_in_tree(folder_path, percentage):
     messages = []
     for root, dirs, files in os.walk(folder_path):
-        if any(root.endswith(blacklist) for blacklist in BLACKLISTED_DIRS):
-            messages.append(f"Skipping blacklisted directory: {root}")
-            continue
         for file in files:
             if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff')):
                 image_path = os.path.join(root, file)
