@@ -761,3 +761,14 @@ button:active {
     flex: 1;
     font-size: large;
 }
+
+.main {
+    padding:3em;
+    margin: 20px 15px 15px 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    align-content: center;
+    position: fixed;
+    overflow: hidden;
+}
