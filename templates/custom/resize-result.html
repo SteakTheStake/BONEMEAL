@@ -43,6 +43,7 @@
             <div id="output">
                 <p>Resize Successful!</p>
                 {{ output }}
+                <a href="{{ url_for('download') }}">Download Processed Images</a>
             </div>
         {% else %}
             <div id="output">Resize Failed...</div>
