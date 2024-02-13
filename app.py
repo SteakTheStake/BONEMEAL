@@ -45,14 +45,13 @@ def resize_images_in_tree(folder_path, percentage):
 def find_png_files(directory):
     """ Find all .png files in the specified directory and its subdirectories. """
     return glob.glob(
-        os.path.join(directory, '.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.PNG', '.JPG', '.JPEG', '.BMP',
-                     '.GIF', '.TIFF'), recursive=True)
+        os.path.join(directory, '.png', '.jpg', '.jpeg', '`.bmp', '.gif', '.tiff'), recursive=True)
 
 
 def convert_to_indexed_color(image_path):
     """ Convert the image to indexed color and save it. """
     with Image.open(image_path) as img:
-        img = img.convert('P', palette=Image.ADAPTIVE, colors=256)
+        img = img.convert('P', palette=Image.Palette.ADAPTIVE, colors=256)
         img.save(image_path)
 
 
@@ -86,7 +85,6 @@ def resize():
                         convert_to_indexed_color(file_path)
 
         output_messages = []
-        # Create a zip file of the processed images
         zip_path = os.path.join(tempfile.gettempdir(), 'bonemeal-output.zip')
         with zipfile.ZipFile(zip_path, 'w') as zipf:
             for file in uploaded_files:
@@ -104,7 +102,7 @@ def resize():
 
 @app.route('/resize-result', methods=['GET'])
 def resize_result():
-    output = session.get('resize_output', 'No data available')
+    output = session.get('resize_output')
     print(f"Resize Result Output: {output}")  # Debugging line
     return render_template('custom/resize-result.html', output=output)
 
@@ -135,6 +133,11 @@ def tile_textures():
 @app.route('/merge_ctm')
 def merge_ctm():
     return render_template('custom/merge_ctm.html')
+
+
+@app.route('/internal_error')
+def internal_error():
+    return render_template('custom/internal_error.html')
 
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@ body {
     position: fixed;
 }
 
-.bonemeal{
+.bonemeal {
     position: relative;
     top: 50%;
     left: 50%;
@@ -46,7 +46,7 @@ body {
 
 .bonemeal:hover {
 }
-.navbar{
+.navbar {
     width: 150px;
     height: 150px;
     left: 52%;
@@ -61,7 +61,9 @@ body {
     background-size:150px 150px;
 }
 .navbar:hover{
+
 }
+
 .navbar .menu{
     list-style: none;
     position: absolute;
@@ -281,6 +283,13 @@ body {
     font-family: 'MinecraftCHMC', SansSerif, serif;
 }
 
+.btnctnr {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 3px 15px 0 15px;
+}
+
 .rainbow {
     height: 100vh;
     width: 0;
@@ -291,102 +300,102 @@ body {
 }
 .rainbow:nth-child(1) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 43.875s linear infinite slide;
+    animation: 53.875s linear infinite slide;
     animation-delay: -2.25s;
 }
 .rainbow:nth-child(2) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 42.75s linear infinite slide;
+    animation: 52.75s linear infinite slide;
     animation-delay: -4.5s;
 }
 .rainbow:nth-child(3) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 41.625s linear infinite slide;
+    animation: 51.625s linear infinite slide;
     animation-delay: -6.75s;
 }
 .rainbow:nth-child(4) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 40.5s linear infinite slide;
+    animation: 50.5s linear infinite slide;
     animation-delay: -9s;
 }
 .rainbow:nth-child(5) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 39.375s linear infinite slide;
+    animation: 49.375s linear infinite slide;
     animation-delay: -11.25s;
 }
 .rainbow:nth-child(6) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 38.25s linear infinite slide;
+    animation: 48.25s linear infinite slide;
     animation-delay: -13.5s;
 }
 .rainbow:nth-child(7) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 37.125s linear infinite slide;
+    animation: 47.125s linear infinite slide;
     animation-delay: -15.75s;
 }
 .rainbow:nth-child(8) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 36s linear infinite slide;
+    animation: 46s linear infinite slide;
     animation-delay: -18s;
 }
 .rainbow:nth-child(9) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 34.875s linear infinite slide;
+    animation: 44.875s linear infinite slide;
     animation-delay: -20.25s;
 }
 .rainbow:nth-child(10) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 33.75s linear infinite slide;
+    animation: 43.75s linear infinite slide;
     animation-delay: -22.5s;
 }
 .rainbow:nth-child(11) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 32.625s linear infinite slide;
+    animation: 42.625s linear infinite slide;
     animation-delay: -24.75s;
 }
 .rainbow:nth-child(12) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 31.5s linear infinite slide;
+    animation: 41.5s linear infinite slide;
     animation-delay: -27s;
 }
 .rainbow:nth-child(13) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 30.375s linear infinite slide;
+    animation: 40.375s linear infinite slide;
     animation-delay: -29.25s;
 }
 .rainbow:nth-child(14) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 29.25s linear infinite slide;
+    animation: 39.25s linear infinite slide;
     animation-delay: -31.5s;
 }
 .rainbow:nth-child(15) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 28.125s linear infinite slide;
+    animation: 38.125s linear infinite slide;
     animation-delay: -33.75s;
 }
 .rainbow:nth-child(16) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 27s linear infinite slide;
+    animation: 37s linear infinite slide;
     animation-delay: -36s;
 }
 .rainbow:nth-child(17) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 25.875s linear infinite slide;
+    animation: 35.875s linear infinite slide;
     animation-delay: -38.25s;
 }
 .rainbow:nth-child(18) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 24.75s linear infinite slide;
+    animation: 34.75s linear infinite slide;
     animation-delay: -40.5s;
 }
 .rainbow:nth-child(19) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 23.625s linear infinite slide;
+    animation: 33.625s linear infinite slide;
     animation-delay: -42.75s;
 }
 .rainbow:nth-child(20) {
     box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
-    animation: 22.5s linear infinite slide;
+    animation: 32.5s linear infinite slide;
     animation-delay: -45s;
 }
 
@@ -408,8 +417,10 @@ body {
     position: absolute;
 }
 .rainbow-blur {
-    transform: scale(1);
+    transform: scale(2.5, 2.5);
     opacity: 0.75;
+    filter: brightness(2) blur(1px) saturate(1.5);
+    image-rendering: pixelated;
 }
 
 .nobtn {
@@ -461,7 +472,7 @@ body {
 }
 
 .file-upload-container {
-    height: 200px;
+    height: 235px;
     width: 800px;
     border-radius: 10px;
     box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
@@ -474,6 +485,42 @@ body {
     background-color: rgba(0, 110, 255, 0.041);
 }
 
+.fallback {
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header2 {
+    top: 50%;
+    left: 95%;
+    transform: translate(-50%, -50%) scale(1);
+    position: relative;
+    flex: 1;
+    height: 200px;
+    width: 800px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#fileUpload {
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .header {
     flex: 1;
     width: 100%;
@@ -483,6 +530,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .header svg {
@@ -500,7 +548,6 @@ body {
     height: 40px;
     padding: 8px;
     border-radius: 10px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -523,10 +570,6 @@ body {
     text-align: center;
 }
 
-#fileUpload {
-    display: none;
-}
-
 .form-container {
     width: 800px;
     background-color: rgba(0, 110, 255, 0.041);
@@ -546,7 +589,7 @@ body {
 }
 
 .form-container button:active {
-    scale: 0.95;
+    scale: 1;
 }
 
 .form-container .form {
@@ -609,10 +652,10 @@ body {
 button {
     cursor: pointer;
     align-items: center;
-    background-color: rgba(70, 66, 66, 0.103);
+    background-color: rgba(126, 65, 255, 0.5);
     border: 0;
     border-radius: 8px;
-    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-shadow: rgba(126, 65, 255, 0.2) 0 15px 30px -5px;
     box-sizing: border-box;
     color: #FFFFFF;
     display: flex;
@@ -649,12 +692,9 @@ button:hover span {
 }
 
 button:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
 }
 
-.dropzone {
-    background-color: rgba(255, 255, 255, 0);
-}
 
 .white-icon {
     stroke: #FFFFFF;
@@ -771,4 +811,12 @@ button:active {
     align-content: center;
     position: fixed;
     overflow: hidden;
+}
+
+.no-files {
+    display: initial;
+}
+
+.uploaded-files {
+    display: none;
 }

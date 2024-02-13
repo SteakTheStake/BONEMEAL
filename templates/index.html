@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="rainbow-blur">
@@ -42,23 +42,23 @@
                 <div class="col-md-6" id="hoverSound">
                     <div class="navbar">
                         <ul id="clickSound" class="menu">
-                            <li><a href="javascript:delay('/resize')" class="Resize neonText pulsate">Resize</a></li>
-                            <li><a href="javascript:delay('/split_ctm')" class="Split neonText pulsate">Split CTM</a></li>
-                            <li><a href="javascript:delay('#')" class="Move neonText pulsate">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="Tile neonText pulsate">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="Merge neonText pulsate">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="placeholder neonText pulsate">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="placeholder neonText pulsate">Soon</a></li>
-                            <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder neonText pulsate">Discord</a></li>
-                            <li><a href="https://summitmc.xyz/" target="_blank" class="Summit neonText pulsate">SummitMC</a></li>
+                            <li><a href="javascript:delay('/resize')" class="Resize">Resize</a></li>
+                            <li><a href="javascript:delay('/split_ctm')" class="Split">Split CTM</a></li>
+                            <li><a href="javascript:delay('#')" class="Move">Soon</a></li>
+                            <li><a href="javascript:delay('#')" class="Tile">Soon</a></li>
+                            <li><a href="javascript:delay('#')" class="Merge">Soon</a></li>
+                            <li><a href="javascript:delay('#')" class="placeholder">Soon</a></li>
+                            <li><a href="javascript:delay('#')" class="placeholder">Soon</a></li>
+                            <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
+                            <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <br>
             <br>
-                <h1 class="title-center neonText pulsate">BONEMEAL</h1>
-                <h3 class="sub-title-center neonText pulsate">Speed Up Your Workflow</h3>
+                <h1 class="title-center">BONEMEAL</h1>
+                <h3 class="sub-title-center">Speed Up Your Workflow</h3>
         </div>
 </div>
 <footer class="bottom-div">
@@ -73,7 +73,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/sound.js') }}"></script>
 </body>
 </html>

@@ -19,3 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function delay (URL) {
     setTimeout( function() { window.location = URL }, 250 );
 }
+
+document.getElementById("go-back").addEventListener("click", () => {
+    history.back();
+});
