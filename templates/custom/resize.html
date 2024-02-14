@@ -7,6 +7,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='/css/style.css') }}" rel="stylesheet">
+    <script>
+
+        const filesJson = '{{ files | tojson | safe }}' || "[]";
+        let files;
+        files = JSON.parse(filesJson);
+
+        // The path to your WebAssembly `.wasm` file
+        const wasmModuleUrl = '{{ url_for("serve_wasm") }}';
+
+        function loadWasmModule() {
+            fetch(wasmModuleUrl)
+                .then(response => response.arrayBuffer())
+                .then(bytes => WebAssembly.instantiate(bytes, {}))
+                .then(results => {
+                    window.wasmModule = results.instance.exports;
+                })
+                .catch(console.error);
+        }
+
+        function processFiles(percentage) {
+            // Now `files` is a JavaScript array of file paths
+            const files = JSON.parse({{ files | tojson }});
+            const resizePercentage = percentage;
+
+            // For each file, read and process it
+            files.forEach((file) => {
+                // Read the file as an ArrayBuffer
+                fetch(file)
+                    .then(response => response.arrayBuffer())
+                    .then(buffer => {
+                        // Call the WASM function to resize the image
+                        const resizedImage = window.wasmModule.resize_image(new Uint8Array(buffer), resizePercentage);
+                        // Handle the resized image data...
+                    })
+                    .catch(console.error);
+            });
+        }
+
+        // Call loadWasmModule on page load
+        window.onload = loadWasmModule;
+    </script>
 </head>
 <body>
 <div class="rainbow-blur">
@@ -97,7 +138,7 @@
                             </svg>
                         </label>
                     </div>
-                    <button type="submit"><span class="text">Start Resizing</span></button>
+                    <button type="submit" onclick="processFiles({{ percentage | safe }})"><span class="text">Start Resizing</span></button>
                     <div id="logArea" class="mt-4 bottom">
                         <h3>Activity Log</h3>
                         <div id="logs"></div>
