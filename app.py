@@ -17,9 +17,9 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/pkg/bonemeal_bg.wasm')
+@app.route('/run-resize')
 def serve_wasm():
-    return send_from_directory('pkg', 'bonemeal_bg.wasm', mimetype='application/wasm')
+    return send_from_directory('static/pkg', 'bonemeal_bg.wasm', mimetype='application/wasm')
 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff'}

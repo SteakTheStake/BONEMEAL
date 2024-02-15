@@ -11,7 +11,3 @@ document.getElementById('clickSound').addEventListener('mousedown', function(but
     button.addEventListener('click', function() {
     });
 });
-
-
-
-document.getElementById("year").innerHTML = new Date().getFullYear();

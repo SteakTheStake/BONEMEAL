@@ -76,5 +76,8 @@
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='/js/sound.js') }}"></script>
+<script>
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+</script>
 </body>
 </html>

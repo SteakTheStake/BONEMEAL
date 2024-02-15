@@ -7,47 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='/css/style.css') }}" rel="stylesheet">
-    <script>
-
-        const filesJson = '{{ files | tojson | safe }}' || "[]";
-        let files;
-        files = JSON.parse(filesJson);
-
-        // The path to your WebAssembly `.wasm` file
-        const wasmModuleUrl = '{{ url_for("serve_wasm") }}';
-
-        function loadWasmModule() {
-            fetch(wasmModuleUrl)
-                .then(response => response.arrayBuffer())
-                .then(bytes => WebAssembly.instantiate(bytes, {}))
-                .then(results => {
-                    window.wasmModule = results.instance.exports;
-                })
-                .catch(console.error);
-        }
-
-        function processFiles(percentage) {
-            // Now `files` is a JavaScript array of file paths
-            const files = JSON.parse({{ files | tojson }});
-            const resizePercentage = percentage;
-
-            // For each file, read and process it
-            files.forEach((file) => {
-                // Read the file as an ArrayBuffer
-                fetch(file)
-                    .then(response => response.arrayBuffer())
-                    .then(buffer => {
-                        // Call the WASM function to resize the image
-                        const resizedImage = window.wasmModule.resize_image(new Uint8Array(buffer), resizePercentage);
-                        // Handle the resized image data...
-                    })
-                    .catch(console.error);
-            });
-        }
-
-        // Call loadWasmModule on page load
-        window.onload = loadWasmModule;
-    </script>
 </head>
 <body>
 <div class="rainbow-blur">
@@ -101,7 +60,7 @@
                             <img src="" id="preview" alt="Uploaded Images">
                         </div>
                     </div>
-                    <form action="/target" class="dropzone" id="my-great-dropzone">
+                    <form action="/target" id="my-great-dropzone">
                         <div class="fallback">
                             <label for="fileUploadCopy" class="footer">
                                 <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +97,7 @@
                             </svg>
                         </label>
                     </div>
-                    <button type="submit" onclick="processFiles({{ percentage | safe }})"><span class="text">Start Resizing</span></button>
+                    <button type="submit"><span class="text">Start Resizing</span></button>
                     <div id="logArea" class="mt-4 bottom">
                         <h3>Activity Log</h3>
                         <div id="logs"></div>
@@ -154,7 +113,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='/js/sound.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/drag-n-drop.js') }}"></script>
 <script src="{{ url_for('static', filename='/js/uploaded-files.js') }}"></script>
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 <script>
@@ -187,7 +145,7 @@
 <script>
     Dropzone.options.fileUpload = {
         paramName: "file",
-        maxFilesize: 2, // MB
+        maxFilesize: 15, // MB
         acceptedFiles: 'image/*', // Accept only image files
         accept: function(file, done) {
             var extension = file.name.split('.').pop().toLowerCase();
@@ -200,6 +158,73 @@
             }
         }
     };
+</script>
+<script type="module">
+    const filesJson = '{{ files | tojson | safe }}' || "[]";
+    let files = JSON.parse(filesJson);
+    const wasmModuleUrl = '/run-resize';
+
+    async function loadWasmModule() {
+        try {
+            const response = await fetch(wasmModuleUrl);
+            const bytes = await response.arrayBuffer();
+            const results = await WebAssembly.instantiate(bytes, {});
+            window.wasmModule = results.instance.exports;
+        } catch (error) {
+            console.error("Failed to load WASM module:", error);
+        }
+    }
+
+    async function processFiles(percentage) {
+        if (!window.wasmModule) {
+            console.error("WASM module is not loaded yet.");
+            return;
+        }
+
+        for (let file of files) {
+            try {
+                const response = await fetch(file);
+                const buffer = await response.arrayBuffer();
+                const uint8Buffer = new Uint8Array(buffer);
+
+                const ptr = window.wasmModule.__wbindgen_malloc(uint8Buffer.length);
+                const memory = new Uint8Array(window.wasmModule.memory.buffer, ptr, uint8Buffer.length);
+                memory.set(uint8Buffer);
+
+                // Assuming resize_image returns a pointer to the resized image data and its length
+                const resizedImagePtr = window.wasmModule.resize_image(ptr, uint8Buffer.length, percentage);
+
+                // Retrieve the length of the resized image from your WASM module
+                // This depends on how your WASM module is structured
+                const resizedImageLength = window.wasmModule.get_resized_image_length(resizedImagePtr);
+
+                // Extract the resized image data from the WASM memory
+                const resizedImage = new Uint8Array(window.wasmModule.memory.buffer, resizedImagePtr, resizedImageLength);
+
+                // Handle the resized image data
+                // Example: converting the Uint8Array to a Blob and creating an Object URL
+                const blob = new Blob([resizedImage], { type: "image/jpeg" }); // Adjust the MIME type accordingly
+                const imageUrl = URL.createObjectURL(blob);
+
+                // You can now use `imageUrl` for img src, download, etc.
+                // Example: Display the image
+                const img = document.createElement("img");
+                img.src = imageUrl;
+                document.body.appendChild(img);
+
+                // Free the memory allocated for the resized image in WASM
+                window.wasmModule.__wbindgen_free(resizedImagePtr, resizedImageLength);
+
+                window.wasmModule.__wbindgen_free(ptr, uint8Buffer.length);
+                // Also free any other allocated memory if necessary
+
+            } catch (error) {
+                console.error("Error processing file:", file, error);
+            }
+        }
+    }
+
+    window.onload = loadWasmModule;
 </script>
 </body>
 </html>
