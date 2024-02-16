@@ -1,1 +1,1 @@
-D:\BONEMEAL\root\BONEMEAL\target\debug\libbonemeal.rlib: D:\BONEMEAL\root\BONEMEAL\src\lib.rs
+D:\BONEMEAL\BONEMEAL\static\target\debug\libbonemeal.rlib: D:\BONEMEAL\BONEMEAL\static\src\lib.rs

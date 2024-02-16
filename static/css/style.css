@@ -419,7 +419,7 @@ body {
 .rainbow-blur {
     transform: scale(2.5, 2.5);
     opacity: 0.75;
-    filter: brightness(2) blur(1px) saturate(1.5);
+    /*filter: brightness(2) blur(1px) saturate(1.5);*/
     image-rendering: pixelated;
 }
 

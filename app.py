@@ -1,8 +1,8 @@
 # app.py
 import os
-import tempfile
 import glob
 import zipfile
+from datetime import datetime
 
 from PIL import Image
 from flask import Flask, request, render_template, session, redirect, url_for, send_file, json, send_from_directory
@@ -22,11 +22,9 @@ def serve_wasm():
     return send_from_directory('static/pkg', 'bonemeal_bg.wasm', mimetype='application/wasm')
 
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff'}
-
-
+# Utility function to check allowed file extensions
 def allowed_file(filename):
-    # Check if the file has one of the allowed extensions
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff'}
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -36,22 +34,30 @@ def resize():
     if request.method == 'POST':
         uploaded_files = request.files.getlist("files")
         percentage = request.form.get('percentage', type=float, default=0)
+
         if not 0 < percentage <= 100:
             return render_template('custom/resize.html', error="Percentage must be between 0 and 100.", files=[])
 
-        temp_files = []
-        with tempfile.TemporaryDirectory() as temp_dir:
-            for file in uploaded_files:
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file_path = os.path.join(temp_dir, filename)
-                    file.save(file_path)
-                    temp_files.append(file_path)
+        # Generate unique directory name
+        now = datetime.today()
+        dir_name = f"img-resize-{now.strftime('%Y%m%d-%H%M%S')}"
+        target_dir = os.path.join('root', dir_name)  # Adjust 'root' to your actual root directory path
 
-        # Pass the temp_files and percentage to the template
-        return render_template('custom/resize.html', files=temp_files, percentage=percentage)
+        # Create directory if it doesn't exist
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
 
-    # Handle GET request
+        saved_files = []
+        for file in uploaded_files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(target_dir, filename)
+                file.save(file_path)
+                saved_files.append(file_path)
+
+        # Pass the saved files and percentage to the template
+        return render_template('custom/resize.html', files=saved_files, percentage=percentage)
+
     return render_template('custom/resize.html', files=[])
 
 
@@ -96,4 +102,4 @@ def internal_error():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(debug=True)

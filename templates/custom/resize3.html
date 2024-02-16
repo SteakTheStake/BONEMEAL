@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (Bootstrap and custom CSS links) ... -->
+    <title>BONEMEAL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='/css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="rainbow-blur">
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='h'></div>
+    <div class='v'></div>
+</div>
+<main class="container main">
+    <div>
+        <div class="float"><a href="javascript:delay('/')" id="clickSound"><img src="/static/img/back.png" alt="Back"></a></div>
+        <h1 class="text-center">RESIZE | BONEMEAL</h1>
+        <h4 class="text-center">Resize textures in bulk and convert to indexed color for better in-game performance</h4>
+    </div>
+    <form action="/resize" method="post" enctype="multipart/form-data" id="resizeForm">
+        <div class="column-2">
+            <!-- File Upload -->
+            <div class="form-group">
+                <div class="file-upload-container">
+                    <div class="header dropzone" id="fileUploadDropzone">
+                        <input type="file" class="header2" id="fileUpload" name="file" required webkitdirectory directory multiple>
+                        <div class="no-files">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="white-icon"></path>
+                                </g>
+                            </svg>
+                            <p>No selected files</p>
+                        </div>
+                        <div class="uploaded-files">
+                            <img src="" id="preview" alt="Uploaded Images">
+                        </div>
+                    </div>
+                    <form id="my-great-dropzone">
+                        <div class="fallback">
+                            <label for="fileUploadCopy" class="footer">
+                                <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
+                                        <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
+                                    </g>
+                                </svg>
+                                <p>Supported file types: 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'</p>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="column-3">
+            <div class="form-group">
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="percentageInput">
+                            <h3>Resize Percentage:</h3>
+                        </label>
+                        <input type="number" class="form-control percentage-left" id="percentageInput" name="percentage" min="1" max="100" step="1" value="50">
+                    </div>
+                    <div class="checkbox-right">
+                        <h3>Indexed Color:</h3>
+                        <input type="checkbox" id="cbx" name="cbx" style="display: none;">
+                        <label for="cbx" class="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                    <button type="submit" onclick="alert()"><span class="text">Start Resizing</span></button>
+                    <div id="logArea" class="mt-4 bottom">
+                        <h3>Activity Log</h3>
+                        <div id="logs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<!-- JavaScript for interactive elements -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/sound.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/uploaded-files.js') }}"></script>
+<script src="{{ url_for('static', filename='/pkg/bonemeal.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/wasm-parser.js') }}"></script>
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<script>
+    function addLog(message) {
+        var logDiv = document.getElementById('logs');
+        var time = new Date().toLocaleTimeString();
+        logDiv.innerHTML += `<p>[${time}] ${message}</p>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addLog('Page loaded');
+
+        var fileInput = document.getElementById('fileUpload');
+        fileInput.addEventListener('change', function() {
+            var uploadedFiles = fileInput.files;
+            if (uploadedFiles.length > 0) {
+                var fileNames = Array.from(uploadedFiles).map(file => file.name).join(', ');
+                addLog(`Files uploaded: ${fileNames}`);
+            } else {
+                addLog('No files selected');
+            }
+        });
+
+        document.getElementById('resizeForm').addEventListener('submit', function() {
+            addLog('Form submitted');
+
+        });
+    });
+</script>
+<script>
+    Dropzone.options.fileUpload = {
+        paramName: "file",
+        maxFilesize: 15, // MB
+        acceptedFiles: 'image/*', // Accept only image files
+        accept: function(file, done) {
+            var extension = file.name.split('.').pop().toLowerCase();
+            var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'];
+
+            if (!allowedExtensions.includes(extension)) {
+                done("Only image files are allowed.");
+            } else {
+                done();
+            }
+        }
+    };
+</script>
+<script type="module">
+    const filesJson = '{{ files | tojson | safe }}' || "[]";
+    let files = JSON.parse(filesJson);
+    const wasmModuleUrl = '/run-resize';
+
+    async function loadWasmModule() {
+        try {
+            const response = await fetch(wasmModuleUrl);
+            const bytes = await response.arrayBuffer();
+            const results = await WebAssembly.instantiate(bytes, {});
+            window.wasmModule = results.instance.exports;
+        } catch (error) {
+            console.error("Failed to load WASM module:", error);
+        }
+    }
+
+    async function processFiles(percentage) {
+        if (!window.wasmModule) {
+            console.error("WASM module is not loaded yet.");
+            return;
+        }
+
+        for (let file of files) {
+            try {
+                const response = await fetch(file);
+                const buffer = await response.arrayBuffer();
+                const uint8Buffer = new Uint8Array(buffer);
+
+                const ptr = window.wasmModule.__wbindgen_malloc(uint8Buffer.length);
+                const memory = new Uint8Array(window.wasmModule.memory.buffer, ptr, uint8Buffer.length);
+                memory.set(uint8Buffer);
+
+                // Assuming resize_image returns a pointer to the resized image data and its length
+                const resizedImagePtr = window.wasmModule.resize_image(ptr, uint8Buffer.length, percentage);
+
+                // Retrieve the length of the resized image from your WASM module
+                // This depends on how your WASM module is structured
+                const resizedImageLength = window.wasmModule.get_resized_image_length(resizedImagePtr);
+
+                // Extract the resized image data from the WASM memory
+                const resizedImage = new Uint8Array(window.wasmModule.memory.buffer, resizedImagePtr, resizedImageLength);
+
+                // Handle the resized image data
+                // Example: converting the Uint8Array to a Blob and creating an Object URL
+                const blob = new Blob([resizedImage], { type: "image/jpeg" }); // Adjust the MIME type accordingly
+                const imageUrl = URL.createObjectURL(blob);
+
+                // You can now use `imageUrl` for img src, download, etc.
+                // Example: Display the image
+                const img = document.createElement("img");
+                img.src = imageUrl;
+                document.body.appendChild(img);
+
+                // Free the memory allocated for the resized image in WASM
+                window.wasmModule.__wbindgen_free(resizedImagePtr, resizedImageLength);
+
+                window.wasmModule.__wbindgen_free(ptr, uint8Buffer.length);
+                // Also free any other allocated memory if necessary
+
+            } catch (error) {
+                console.error("Error processing file:", file, error);
+            }
+        }
+    }
+
+    window.onload = loadWasmModule;
+</script>
+</body>
+</html>
