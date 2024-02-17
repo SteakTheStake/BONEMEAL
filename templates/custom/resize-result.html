@@ -40,13 +40,9 @@
     <!-- Display Area -->
     <div id="resultArea" class="mt-4">
         {% if output %}
-            <div id="output">
-                <p>Resize Successful!</p>
-                {{ output }}
-                <button type="submit" class="btn btn-primary form-submit-btn" href="{{ url_for('download') }}"><span class="text">Download Processed Images</span></button>
-            </div>
+            <a href="{{ output }}" download>Download Images</a>
         {% else %}
-            <div id="output">Resize Failed...</div>
+            <p>No images available for download.</p>
         {% endif %}
     </div>
 </div>

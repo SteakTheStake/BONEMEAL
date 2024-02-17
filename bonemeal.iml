@@ -9,7 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/static/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/static/target" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (BONEMEAL)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="dropzone" level="application" />
     <orderEntry type="library" name="@popperjs/core" level="application" />

@@ -34,14 +34,19 @@
     <div class='v'></div>
 </div>
 <main class="container main">
-    <div>
-        <div class="float"><a href="javascript:delay('/')" id="clickSound"><img src="/static/img/back.png" alt="Back"></a></div>
-        <h1 class="text-center">RESIZE | BONEMEAL</h1>
-        <h4 class="text-center">Resize textures in bulk and convert to indexed color for better in-game performance</h4>
-    </div>
-    <input type="file" id="imageInput" accept="image/*">
-    <button onclick="processImage()">Process Image</button>
-    <div id="output"></div>
+    <h1>Image Resizer</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/resize" method="post" enctype="multipart/form-data">
+        <label for="files">Select images:</label>
+        <input type="file" id="files" name="files" multiple>
+        <br>
+        <label for="percentage">Resize Percentage (1-100):</label>
+        <input type="number" id="percentage" name="percentage" min="1" max="100">
+        <br>
+        <input type="submit" value="Upload and Resize">
+    </form>
 </main>
 <!-- JavaScript for interactive elements -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

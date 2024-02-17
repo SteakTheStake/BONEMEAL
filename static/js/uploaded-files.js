@@ -1,4 +1,4 @@
-var fileTag = document.getElementById("fileUpload"),
+var fileTag = document.getElementById("files"),
     preview = document.getElementById("preview");
 
 fileTag.addEventListener("change", function() {
@@ -19,7 +19,7 @@ function changeImage(input) {
     }
 }
 
-document.getElementById('fileUpload').addEventListener('change', function() {
+document.getElementById('files').addEventListener('change', function() {
     if (this.files.length > 0) {
         document.querySelectorAll('.no-files').forEach(el => el.style.display = 'none');
     }

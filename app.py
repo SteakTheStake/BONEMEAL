@@ -2,6 +2,7 @@
 import os
 import glob
 import zipfile
+import shutil
 from datetime import datetime
 
 from PIL import Image
@@ -17,16 +18,49 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/run-resize')
-def serve_wasm():
-    return send_from_directory('static/pkg', 'bonemeal_bg.wasm', mimetype='application/wasm')
+def zip_directory(folder_path, output_filename):
+    shutil.make_archive(output_filename, 'zip', folder_path)
+    return output_filename + '.zip'
 
 
-# Utility function to check allowed file extensions
+def get_directory_path():
+    path = input("Enter the directory path: ")
+    if not os.path.isdir(path):
+        print("Invalid directory path.")
+        return get_directory_path()
+    return path
+
+
+def get_image_dimensions():
+    try:
+        width = int(input("Enter the desired width: "))
+        height = int(input("Enter the desired height: "))
+        return width, height
+    except ValueError:
+        print("Invalid dimensions. Please enter numeric values.")
+        return get_image_dimensions()
+
+
+def resize_image(image_path, size, filter_type):
+    with Image.open(image_path) as img:
+        img.thumbnail(size, filter_type)
+        return img
+
+
+def process_images(directory, size):
+    for filename in os.listdir(directory):
+        if filename.endswith(".png"):
+            image_path = os.path.join(directory, filename)
+            if "_s.png" in filename or "_n.png" in filename:
+                resized_image = resize_image(image_path, size, Image.Resampling.BILINEAR)
+            else:
+                resized_image = resize_image(image_path, size, Image.Resampling.NEAREST)
+            resized_image.save(os.path.join(directory, "resized", filename))
+
+
+# Add a utility function for allowed file types
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff'}
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif']
 
 
 @app.route('/resize', methods=['GET', 'POST'])
@@ -36,14 +70,12 @@ def resize():
         percentage = request.form.get('percentage', type=float, default=0)
 
         if not 0 < percentage <= 100:
-            return render_template('custom/resize.html', error="Percentage must be between 0 and 100.", files=[])
+            return render_template('custom/resize-img.html', error="Percentage must be between 0 and 100.", files=[])
 
-        # Generate unique directory name
         now = datetime.today()
-        dir_name = f"img-resize-{now.strftime('%Y%m%d-%H%M%S')}"
-        target_dir = os.path.join('root', dir_name)  # Adjust 'root' to your actual root directory path
+        dir_name = f"img-resize-{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        target_dir = os.path.join('root', dir_name)
 
-        # Create directory if it doesn't exist
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
 
@@ -53,25 +85,29 @@ def resize():
                 filename = secure_filename(file.filename)
                 file_path = os.path.join(target_dir, filename)
                 file.save(file_path)
+
+                # Resize logic
+                with Image.open(file_path) as img:
+                    width, height = img.size
+                    new_dimensions = (int(width * (percentage / 100)), int(height * (percentage / 100)))
+                    img.thumbnail(new_dimensions)
+                    img.save(file_path)
+
                 saved_files.append(file_path)
 
-        # Pass the saved files and percentage to the template
-        return render_template('custom/resize.html', files=saved_files, percentage=percentage)
+        # Store the directory path in the session for download later
+        zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
+        session['zip_path'] = zip_path
 
-    return render_template('custom/resize.html', files=[])
+        return render_template('custom/resize-working.html', files=saved_files, percentage=percentage)
 
-
-@app.route('/resize-result', methods=['GET'])
-def resize_result():
-    output = session.get('resize_output')
-    print(f"Resize Result Output: {output}")  # Debugging line
-    return render_template('custom/resize-result.html', output=output)
+    return render_template('custom/resize-img.html', files=[])
 
 
 @app.route('/download')
 def download():
     zip_path = session.get('zip_path')
-    if zip_path and os.path.exists(zip_path):
+    if zip_path and os.path.isfile(zip_path):
         return send_file(zip_path, as_attachment=True)
     return 'No file available for download', 404
 
