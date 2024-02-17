@@ -38,12 +38,15 @@
     <h1 class="text-center">RESIZE RESULTS | BONEMEAL</h1>
     <h4 class="text-center">Not satisfied? Click the back button and tweak the settings</h4>
     <!-- Display Area -->
-    <div id="resultArea" class="mt-4">
-        {% if output %}
-            <a href="{{ output }}" download>Download Images</a>
-        {% else %}
-            <p>No images available for download.</p>
-        {% endif %}
+    <div id="resultArea" class="mt-4 output">
+        <h1>Resized Images</h1>
+        <a href="/download">Download All Images</a>
+        <p>Resized with {{ percentage }}% scale.</p>
+        <div id="output-logs">
+            {% for file in files %}
+                <p>Resized {{ file }} to {{ percentage }}% of original dimensions</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 <!-- JavaScript for interactive elements -->

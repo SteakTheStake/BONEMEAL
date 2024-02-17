@@ -43,51 +43,52 @@
         <h4 class="text-center">Resize textures in bulk and convert to indexed color for better in-game performance</h4>
     </div>
     <form action="/resize" id="resizeForm" method="post" enctype="multipart/form-data">
-        <div class="column-2">
-            <!-- File Upload -->
-            <div class="form-group">
-                <div class="file-upload-container">
-                    <div class="header dropzone" id="fileUploadDropzone">
-                        <input type="file" class="header2" id="files" name="files" webkitdirectory directory multiple>
-                        <label for="files">
-                            <div class="no-files">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="white-icon"></path>
-                                    </g>
-                                </svg>
-                                <p>No selected files</p>
-                            </div>
-                        </label>
-                    </div>
-                    <form id="my-great-dropzone">
-                        <div class="fallback">
-                            <label for="fileUploadCopy" class="footer">
-                                <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
-                                        <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
-                                    </g>
-                                </svg>
-                                <p>Supported file types: 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'</p>
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="column-3">
             <div class="form-group">
                 <div class="form-container">
                     <div class="form-group">
-                        <input type="number" class="form-control percentage-left" id="percentage" name="percentage" min="1" max="100" step="1" value="50">
-                        <label for="percentage">
-                            <h3>Resize Percentage:</h3>
-                        </label>
+                        <div class="column-2">
+                            <!-- File Upload -->
+                            <div class="form-group">
+                                <div class="file-upload-container">
+                                    <div class="header dropzone" id="fileUploadDropzone">
+                                        <input type="file" class="header2" id="files" name="files" webkitdirectory directory multiple>
+                                        <label for="files">
+                                            <div class="no-files">
+                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="white-icon"></path>
+                                                    </g>
+                                                </svg>
+                                                <p>No selected files</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <form id="my-great-dropzone">
+                                        <div class="fallback file-upload-spacing">
+                                            <label for="fileUploadCopy" class="footer">
+                                                <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
+                                                        <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
+                                                    </g>
+                                                </svg>
+                                                <p>Supported file types: 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'</p>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="file-upload-spacing2">
+                                <input type="number" class="form-control percentage-left" id="percentage" name="percentage" min="1" max="100" step="1" value="50">
+                                <label for="percentage">
+                                    <h3>Resize Percentage:</h3>
+                                </label>
+                            </div>
                     </div>
                     <div class="checkbox-right">
                         <h3>Indexed Color:</h3>
@@ -110,7 +111,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </form>
 </main>
 <!-- JavaScript for interactive elements -->
@@ -122,21 +122,33 @@
 <script src="{{ url_for('static', filename='/js/uploaded-files.js') }}"></script>
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 <script>
+    function allowed_file(filename) {
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        return allowedExtensions.exec(filename);
+    }
+
     function addLog(message) {
-        var logDiv = document.getElementById('logs');
-        var time = new Date().toLocaleTimeString();
+        const logDiv = document.getElementById('logs');
+        const time = new Date().toLocaleTimeString();
         logDiv.innerHTML += `<p>[${time}] ${message}</p>`;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         addLog('Page loaded');
 
-        var fileInput = document.getElementById('files');
+        const fileInput = document.getElementById('files');
         fileInput.addEventListener('change', function() {
-            var uploadedFiles = fileInput.files;
+            const uploadedFiles = fileInput.files;
             if (uploadedFiles.length > 0) {
-                var fileNames = Array.from(uploadedFiles).map(file => file.name).join(', ');
-                addLog(`Files uploaded: ${fileNames}`);
+                const fileNames = Array.from(uploadedFiles)
+                    .filter(file => allowed_file(file.name))
+                    .map(file => file.name)
+                    .join(', ');
+                if(fileNames.length > 0) {
+                    addLog(`Files uploaded: ${fileNames}`);
+                } else {
+                    addLog('No valid image files selected');
+                }
             } else {
                 addLog('No files selected');
             }
@@ -150,11 +162,11 @@
 <script>
     Dropzone.options.fileUpload = {
         paramName: "file",
-        maxFilesize: 15, // MB
+        maxFilesize: 1000, // MB
         acceptedFiles: 'image/*', // Accept only image files
         accept: function(file, done) {
-            var extension = file.name.split('.').pop().toLowerCase();
-            var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'];
+            const extension = file.name.split('.').pop().toLowerCase();
+            const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'];
 
             if (!allowedExtensions.includes(extension)) {
                 done("Only image files are allowed.");
