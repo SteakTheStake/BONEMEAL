@@ -5,7 +5,7 @@ import zipfile
 import shutil
 from datetime import datetime
 
-from PIL import Image
+from PIL import Image, ImageEnhance
 from flask import Flask, request, render_template, session, redirect, url_for, send_file, json, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -42,6 +42,14 @@ def get_image_dimensions():
         return get_image_dimensions()
 
 
+def apply_diffusion_dither(image_path):
+    with Image.open(image_path) as img:
+        # Convert the image to 8-bit palette using dithering
+        dithered_img = img.convert("P", dither=Image.Dither.FLOYDSTEINBERG)
+        # Save the dithered image
+        dithered_img.save(image_path)
+
+
 def resize_image(image_path, size, filter_type):
     with Image.open(image_path) as img:
         img.thumbnail(size, filter_type)
@@ -73,8 +81,10 @@ def resize():
         if not 0 < percentage <= 100:
             return render_template('custom/resize-img.html', error="Percentage must be between 0 and 100.", files=[])
 
+        apply_dither = 'dither' in request.form
+
         now = datetime.today()
-        dir_name = f"BONEMEAL_-{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        dir_name = f"BONEMEAL_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
         target_dir = os.path.join('root', dir_name)
 
         if not os.path.exists(target_dir):
@@ -82,6 +92,7 @@ def resize():
 
         saved_files = []
         for file in uploaded_files:
+
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
 
@@ -90,7 +101,6 @@ def resize():
                 target_sub_dir = os.path.join(target_dir, sub_dir)
                 if not os.path.exists(target_sub_dir):
                     os.makedirs(target_sub_dir)
-
                 file_path = os.path.join(target_sub_dir, filename)
                 file.save(file_path)
 
@@ -101,6 +111,9 @@ def resize():
                             print(f"Skipping file {filename} due to insufficient dimensions.")
                             os.remove(file_path)  # Remove the file if it doesn't meet size requirements
                             continue
+
+                        if apply_dither and not filename.endswith(("_s.png", "_n.png")):
+                            apply_diffusion_dither(file_path)
 
                         # Resize Image
                         new_dimensions = (int(img.width * (percentage / 100)), int(img.height * (percentage / 100)))

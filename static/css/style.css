@@ -16,7 +16,8 @@
 body {
     background-color: #191919;
     color: #ffffff;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 #resultArea {
@@ -419,7 +420,7 @@ body {
 .rainbow-blur {
     transform: scale(2.5, 2.5);
     opacity: 0.75;
-    /*filter: brightness(2) blur(1px) saturate(1.5);*/
+    filter: brightness(2) blur(1px) saturate(1.5);
     image-rendering: pixelated;
 }
 
@@ -507,7 +508,6 @@ input .header2 {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    cursor: pointer;
     background: transparent;
     border: none;
     overflow: visible;
@@ -542,11 +542,12 @@ input .header2 {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    cursor: pointer;
 }
 
 .header svg {
+    position: relative;
     height: 100px;
+    left: 13px;
 }
 
 .header p {
@@ -573,7 +574,6 @@ input .header2 {
     background-color: rgba(70, 66, 66, 0.103);
     border-radius: 50%;
     padding: 2px;
-    cursor: pointer;
     box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
     display: none;
 }
@@ -622,7 +622,7 @@ input .header2 {
     margin-bottom: 5px;
     color: #cccccc;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 20px;
 }
 
 .form-container .form-group input {
@@ -634,6 +634,7 @@ input .header2 {
     font-family: 'MinecraftCHMC', SansSerif, serif;
     background-color: transparent;
     border: 1px solid #414141;
+    font-size: 2rem;
 }
 
 .form-container .form-group textarea {
@@ -718,7 +719,7 @@ button:active {
     box-sizing: border-box;
     color: #FFFFFF;
     display: flex;
-    font-size: 18px;
+    font-size: 2rem;
     justify-content: center;
     line-height: 1em;
     max-width: 100%;
@@ -763,6 +764,7 @@ button:active {
     width: 50%;
     float: right;
     right: 100%;
+    font-size: 2rem;
 }
 
 .percentage-left {
@@ -853,10 +855,15 @@ button:active {
     .main {
         flex-basis: 100%; /* Each column takes full width on small screens */
     }
+
+    body {
+        flex-basis: 100%; /* Each column takes full width on small screens */
+
+    }
 }
 
 .bottom {
-    padding: 50px;
+    padding: 5px 0;
     flex: 1;
     font-size: large;
 }
@@ -912,4 +919,8 @@ button:active {
     height: 400px;
     width: auto;
     overflow: hidden;
+}
+
+.text-big {
+    font-size: 2rem;
 }
