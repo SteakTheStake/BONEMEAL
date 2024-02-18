@@ -41,6 +41,7 @@
     <div id="resultArea" class="mt-4 output">
         <h1>Resized Images</h1>
         <a href="/download">Download All Images</a>
+        <div id="countdown"></div>
         <p>Resized with {{ percentage }}% scale.</p>
         <div id="output-logs">
             {% for file in files %}
@@ -55,5 +56,23 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='js/sound.js') }}"></script>
+<script>
+    window.onload = function() {
+        var remainingSeconds = {{ remaining_seconds }};
+        var countdownElement = document.getElementById('countdown');
+
+        var interval = setInterval(function() {
+            var minutes = Math.floor(remainingSeconds / 60);
+            var seconds = remainingSeconds % 60;
+            countdownElement.innerHTML = minutes + " minutes " + seconds + " seconds until deletion";
+
+            if (remainingSeconds <= 0) {
+                clearInterval(interval);
+                countdownElement.innerHTML = "The files have been deleted.";
+            }
+            remainingSeconds--;
+        }, 1000);
+    };
+</script>
 </body>
 </html>

@@ -1,17 +1,18 @@
 # app.py
 import os
-import glob
-import zipfile
 import shutil
-from datetime import datetime
+import threading
+import time
+from datetime import datetime, timedelta
+from shutil import rmtree
 
-from PIL import Image, ImageEnhance
-from flask import Flask, request, render_template, session, redirect, url_for, send_file, json, send_from_directory
+from PIL import Image
+from flask import Flask, request, render_template, session, send_file
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
-app.config['MAX_CONTENT_LENGTH'] = 800 * 1024 * 1024  # 100MB limit
+app.config['MAX_CONTENT_LENGTH'] = 800 * 1024 * 1024
 
 
 @app.route('/')
@@ -22,6 +23,22 @@ def home():
 def zip_directory(folder_path, output_filename):
     shutil.make_archive(output_filename, 'zip', folder_path)
     return output_filename + '.zip'
+
+
+def delete_files_after_delay(directory_path, zip_path, delay=60):
+    """ Deletes the specified directory and zip file after a delay. """
+    def task():
+        time.sleep(delay)
+        try:
+            # Delete all files in the directory
+            rmtree(directory_path)
+            # Delete the zip file
+            os.remove(zip_path)
+            print(f"Deleted directory {directory_path} and zip file {zip_path}")
+        except Exception as e:
+            print(f"Error deleting files: {e}")
+
+    threading.Thread(target=task).start()
 
 
 def get_directory_path():
@@ -84,7 +101,7 @@ def resize():
         apply_dither = 'dither' in request.form
 
         now = datetime.today()
-        dir_name = f"BONEMEAL_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        dir_name = f"BONEMEAL_EXPORT_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
         target_dir = os.path.join('root', dir_name)
 
         if not os.path.exists(target_dir):
@@ -127,8 +144,18 @@ def resize():
         # Store the directory path in the session for download later
         zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
         session['zip_path'] = zip_path
+        # Calculate the remaining time for deletion
+        deletion_delay = 60
+        deletion_time = datetime.now() + timedelta(seconds=deletion_delay)
+        remaining_seconds = int((deletion_time - datetime.now()).total_seconds())
 
-        return render_template('custom/resize-result.html', files=saved_files, percentage=percentage)
+        # Call the delete function after processing
+        delete_files_after_delay(target_dir, zip_path, delay=deletion_delay)
+
+        return render_template('custom/resize-result.html',
+                               files=saved_files,
+                               percentage=percentage,
+                               remaining_seconds=remaining_seconds)
 
     return render_template('custom/resize-img.html', files=[])
 
