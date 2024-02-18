@@ -109,27 +109,29 @@ def resize():
 
         saved_files = []
         for file in uploaded_files:
-
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
+                # Extract just the filename, not the full path
+                filename_only = os.path.basename(file.filename)
+                secure_name = secure_filename(filename_only)
 
                 # Handling subdirectories
                 sub_dir = os.path.dirname(file.filename)
                 target_sub_dir = os.path.join(target_dir, sub_dir)
                 if not os.path.exists(target_sub_dir):
                     os.makedirs(target_sub_dir)
-                file_path = os.path.join(target_sub_dir, filename)
+
+                file_path = os.path.join(target_sub_dir, secure_name)
                 file.save(file_path)
 
                 # Check if the image meets size requirements
                 try:
                     with Image.open(file_path) as img:
                         if img.width < 8 or img.height < 8:
-                            print(f"Skipping file {filename} due to insufficient dimensions.")
+                            print(f"Skipping file {filename_only} due to insufficient dimensions.")
                             os.remove(file_path)  # Remove the file if it doesn't meet size requirements
                             continue
 
-                        if apply_dither and not filename.endswith(("_s.png", "_n.png")):
+                        if apply_dither and not filename_only.endswith(("_s.png", "_n.png")):
                             apply_diffusion_dither(file_path)
 
                         # Resize Image
@@ -139,7 +141,7 @@ def resize():
                         saved_files.append(file_path)
 
                 except (OSError, ValueError) as error:
-                    print(f"Error processing file {filename}: {error}")
+                    print(f"Error processing file {filename_only}: {error}")
 
         # Store the directory path in the session for download later
         zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
