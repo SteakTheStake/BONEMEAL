@@ -42,10 +42,9 @@
         <h1>Resized Images</h1>
         <a href="/download">Download All Images</a>
         <div id="countdown"></div>
-        <p>Resized with {{ percentage }}% scale.</p>
         <div id="output-logs">
             {% for file in files %}
-                <p>Resized {{ file }} to {{ percentage }}% of original dimensions</p>
+                <p>Resized {{ file }}</p>
             {% endfor %}
         </div>
     </div>

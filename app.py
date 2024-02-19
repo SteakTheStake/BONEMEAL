@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
-app.config['MAX_CONTENT_LENGTH'] = 800 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 
 
 @app.route('/')
@@ -89,14 +89,35 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif']
 
 
+def calculate_new_dimensions(width, height, target_size):
+    if width < height:
+        new_width = target_size
+        new_height = int((target_size / width) * height)
+    else:
+        new_height = target_size
+        new_width = int((target_size / height) * width)
+    return new_width, new_height
+
+
 @app.route('/resize', methods=['GET', 'POST'])
 def resize():
     if request.method == 'POST':
         uploaded_files = request.files.getlist("files")
-        percentage = request.form.get('percentage', type=float, default=50)
+        size_selection = request.form.get('value-radio')  # Get the selected radio button value
 
-        if not 0 < percentage <= 100:
-            return render_template('custom/resize-img.html', error="Percentage must be between 0 and 100.", files=[])
+        # Convert size_selection to actual pixel values
+        size_mapping = {
+            "value-1": 16,
+            "value-2": 32,
+            "value-3": 64,
+            "value-4": 128,
+            "value-5": 256,
+            "value-6": 512
+        }
+        target_size = size_mapping.get(size_selection, 16)  # Default to 16x16 if no valid selection
+
+        if len(uploaded_files) > 5000:
+            return "Error: Too many files. The limit is 5000.", 400
 
         apply_dither = 'dither' in request.form
 
@@ -110,11 +131,9 @@ def resize():
         saved_files = []
         for file in uploaded_files:
             if file and allowed_file(file.filename):
-                # Extract just the filename, not the full path
                 filename_only = os.path.basename(file.filename)
                 secure_name = secure_filename(filename_only)
 
-                # Handling subdirectories
                 sub_dir = os.path.dirname(file.filename)
                 target_sub_dir = os.path.join(target_dir, sub_dir)
                 if not os.path.exists(target_sub_dir):
@@ -123,41 +142,34 @@ def resize():
                 file_path = os.path.join(target_sub_dir, secure_name)
                 file.save(file_path)
 
-                # Check if the image meets size requirements
                 try:
                     with Image.open(file_path) as img:
                         if img.width < 8 or img.height < 8:
                             print(f"Skipping file {filename_only} due to insufficient dimensions.")
-                            os.remove(file_path)  # Remove the file if it doesn't meet size requirements
+                            os.remove(file_path)
                             continue
 
                         if apply_dither and not filename_only.endswith(("_s.png", "_n.png")):
                             apply_diffusion_dither(file_path)
 
-                        # Resize Image
-                        new_dimensions = (int(img.width * (percentage / 100)), int(img.height * (percentage / 100)))
-                        img.thumbnail(new_dimensions)
+                        # Calculate new dimensions while maintaining aspect ratio
+                        new_width, new_height = calculate_new_dimensions(img.width, img.height, target_size)
+                        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
                         img.save(file_path)
                         saved_files.append(file_path)
 
                 except (OSError, ValueError) as error:
                     print(f"Error processing file {filename_only}: {error}")
 
-        # Store the directory path in the session for download later
         zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
         session['zip_path'] = zip_path
-        # Calculate the remaining time for deletion
         deletion_delay = 60
         deletion_time = datetime.now() + timedelta(seconds=deletion_delay)
         remaining_seconds = int((deletion_time - datetime.now()).total_seconds())
 
-        # Call the delete function after processing
         delete_files_after_delay(target_dir, zip_path, delay=deletion_delay)
 
-        return render_template('custom/resize-result.html',
-                               files=saved_files,
-                               percentage=percentage,
-                               remaining_seconds=remaining_seconds)
+        return render_template('custom/resize-result.html', files=saved_files, remaining_seconds=remaining_seconds)
 
     return render_template('custom/resize-img.html', files=[])
 
