@@ -20,6 +20,9 @@ def home():
     return render_template('index.html')
 
 
+""" RESIZE START """
+
+
 def zip_directory(folder_path, output_filename):
     shutil.make_archive(output_filename, 'zip', folder_path)
     return output_filename + '.zip'
@@ -27,6 +30,7 @@ def zip_directory(folder_path, output_filename):
 
 def delete_files_after_delay(directory_path, zip_path, delay=60):
     """ Deletes the specified directory and zip file after a delay. """
+
     def task():
         time.sleep(delay)
         try:
@@ -174,6 +178,9 @@ def resize():
     return render_template('custom/resize-img.html', files=[])
 
 
+""" RESIZE END """
+
+
 @app.route('/download')
 def download():
     zip_path = session.get('zip_path')
@@ -205,6 +212,11 @@ def merge_ctm():
 @app.route('/internal_error')
 def internal_error():
     return render_template('custom/internal_error.html')
+
+
+@app.route('/documentation')
+def documentation():
+    return render_template('custom/documentation.html')
 
 
 if __name__ == "__main__":

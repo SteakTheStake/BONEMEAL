@@ -9,15 +9,32 @@
     src: url("/static/font/MinecraftBold.otf") format("opentype");
 }
 
+@font-face {
+    font-family: 'Standard Galactic Alphabet Regular';
+    src: url('https://www.fontsaddict.com/fontface/standard-galactic-alphabet-regular.ttf');
+}
+
 * {
     font-family: 'MinecraftCHMC', SansSerif, serif;
 }
 
+.fixed-pos {
+    position: fixed;
+}
+
 body {
-    background-color: #191919;
+    background-color: #260d62;
     color: #ffffff;
     overflow-x: hidden;
+}
+
+.body-index {
+    overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.body-scroll{
+    overflow-y: visible;
 }
 
 #resultArea {
@@ -203,6 +220,11 @@ body {
     background-blend-mode: screen;
 }
 
+.documentation {
+    background: rgba(170, 0, 255, 0.105);
+    background-blend-mode: screen;
+}
+
 .placeholder {
     background: rgba(170, 0, 255, 0.105);
     background-blend-mode: screen;
@@ -269,6 +291,18 @@ body {
     left: 15px;
     width: 5px;
     height: auto;
+    cursor: pointer;
+}
+
+.float-2 {
+    padding: 25px;
+    position: fixed;
+    top: 5px;
+    left: 15px;
+    width: 5px;
+    height: auto;
+    cursor: pointer;
+    transform: translateY(10px);
 }
 
 .title-center {
@@ -282,6 +316,21 @@ body {
     text-align: center;
     color: #ffffff;
     font-family: 'MinecraftCHMC', SansSerif, serif;
+}
+
+.title-center2 {
+    text-align: center;
+    color: white;
+    font-family: 'MinecraftCHMC', SansSerif, serif;
+    font-weight: bold;
+    transform: translateY(-120px);
+}
+
+.sub-title-center2 {
+    text-align: center;
+    color: #ffffff;
+    font-family: 'MinecraftCHMC', SansSerif, serif;
+    transform: translateY(-120px);
 }
 
 .btnctnr {
@@ -1002,4 +1051,37 @@ button:active {
 
 .radio-input label:nth-child(6):has(input:checked) ~ .selection {
     transform: translateX(calc(var(--container_width) * 5/6));
+}
+
+
+.top-title {
+    margin-top: 100px;
+    padding: 20px;
+    color: #FFFFFF;
+}
+
+.container-bm {
+    z-index: 9999;
+    padding: 50px;
+    align-content: center;
+    text-align: left;
+    margin-right: 350px;
+    margin-left: 350px;
+}
+
+.text-docs {
+    color: rgba(255, 255, 255, 0.75);
+    opacity: 100%;
+    font-size: 1.5rem;
+    list-style: upper-latin url("");
+}
+
+.text-docs-bold {
+    color: rgb(183, 108, 255);
+    font-size: 2.5rem;
+}
+
+.text-docs-title {
+    color: rgb(132, 0, 255);
+    font-size: 3rem;
 }
