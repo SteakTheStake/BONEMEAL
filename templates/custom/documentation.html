@@ -23,12 +23,13 @@
                 <h1 class="text-docs-title">Functionalities:</h1>
                 <h2 class="text-docs-bold">Image Resizing:</h2>
                 <ul>
-                <li class="text-docs">This feature allows users to resize images to different dimensions. Users can upload multiple files and choose from predefined size options. The application also supports applying diffusion dithering for images that don't have specific suffixes (_s.png, _n.png).</li>
+                <li class="text-docs">This feature allows users to resize images to different dimensions. Users can upload multiple files and choose from predefined size options. Images that do not have the specific suffixes (_s.png, _n.png) will be resized with nearest interpolation and the rest resized with bilinear. The application also supports applying diffusion dithering for images that don't have specific suffixes (_s.png, _n.png).</li>
                 </ul>
                     <ul>
                     <h2 class="text-docs-bold">Key Features:</h2>
                     <li class="text-docs">Multiple file upload with a limit of 5000 images at a max of 1GB in total.</li>
                     <li class="text-docs">Preset size options for resizing.</li>
+                    <li class="text-docs">Different resize methods for each of the three texture groups.</li>
                     <li class="text-docs">Optional diffusion dithering and compression with minimal detail loss.</li>
                     <li class="text-docs">Temporary storage of processed images and auto-deletion after a 1-minute duration.</li>
                     <li class="text-docs">After processing, users can download their images. The images are compressed into a zip file for convenience.</li>

@@ -5,6 +5,11 @@
 
 @font-face {
     font-family: SansSerif;
+    src: url("/static/font/sga-all-characters-pixeled.otf") format("opentype");
+}
+
+@font-face {
+    font-family: SansSerif;
     font-weight: bold;
     src: url("/static/font/MinecraftBold.otf") format("opentype");
 }
@@ -1073,7 +1078,6 @@ button:active {
     color: rgba(255, 255, 255, 0.75);
     opacity: 100%;
     font-size: 1.5rem;
-    list-style: upper-latin url("");
 }
 
 .text-docs-bold {

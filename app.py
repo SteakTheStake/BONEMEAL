@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
-app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 1024
 
 
 @app.route('/')
