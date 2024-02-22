@@ -1,4 +1,5 @@
 # app.py
+import logging
 import os
 import shutil
 import threading
@@ -7,12 +8,13 @@ from datetime import datetime, timedelta
 from shutil import rmtree
 
 from PIL import Image
-from flask import Flask, request, render_template, session, send_file
-from werkzeug.utils import secure_filename
+from flask import Flask, request, render_template, session, send_file, url_for
+from werkzeug.utils import secure_filename, redirect
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
-app.config['MAX_CONTENT_LENGTH'] = 1024
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
+app.config['UPLOAD_FOLDER'] = 'uploaded_images'
 
 
 @app.route('/')
@@ -181,17 +183,121 @@ def resize():
 """ RESIZE END """
 
 
+""" SPLIT CTM START """
+
+
+def allowed_ctm_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif']
+
+
+def process_ctm_images(upload_dir, rows, columns):
+    for filename in os.listdir(upload_dir):
+        file_path = os.path.join(upload_dir, filename)
+        base_name, ext = os.path.splitext(filename)
+
+        # Check for specific suffixes
+        if base_name.endswith('_n') or base_name.endswith('_s'):
+            split_and_save_image(file_path, base_name, rows, columns, True)
+        else:
+            folder_path = os.path.join(upload_dir, base_name)
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
+            split_and_save_image(file_path, folder_path, rows, columns, False)
+
+
+def split_and_save_image(file_path, base_path, rows, columns, has_suffix):
+    img = Image.open(file_path)
+    img_width, img_height = img.size
+    slice_width, slice_height = img_width // columns, img_height // rows
+    counter = 0
+
+    for row in range(rows):
+        for column in range(columns):
+            left = column * slice_width
+            upper = row * slice_height
+            right = (column + 1) * slice_width
+            lower = (row + 1) * slice_height
+
+            img_cropped = img.crop((left, upper, right, lower))
+            suffix = ('_' + base_path.split('_')[-1]) if has_suffix else ''
+            new_filename = f"{counter}{suffix}.png"
+            img_cropped.save(os.path.join(base_path, new_filename))
+            counter += 1
+
+
+
+@app.route('/split_ctm', methods=['GET', 'POST'])
+def resize():
+    if request.method == 'POST':
+        uploaded_files = request.files.getlist("files")
+        size_selection = request.form.get('value-radio')  # Get the selected radio button value
+
+        # Convert size_selection to actual pixel values
+        size_mapping = {
+            "value-1": 2,
+            "value-2": 3,
+            "value-3": 4,
+            "value-4": 5,
+            "value-5": 6,
+            "value-6": 8
+        }
+        target_size = size_mapping.get(size_selection, 4)  # Default to 16x16 if no valid selection
+
+        if len(uploaded_files) > 60:
+            return "Error: Too many files. The limit is 40.", 400
+
+        now = datetime.today()
+        dir_name = f"BONEMEAL_EXPORT_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        target_dir = os.path.join('root', dir_name)
+
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+
+        saved_files = []
+        for file in uploaded_files:
+            if file and allowed_file(file.filename):
+                filename_only = os.path.basename(file.filename)
+                secure_name = secure_filename(filename_only)
+
+                sub_dir = os.path.dirname(file.filename)
+                target_sub_dir = os.path.join(target_dir, sub_dir)
+                if not os.path.exists(target_sub_dir):
+                    os.makedirs(target_sub_dir)
+
+                file_path = os.path.join(target_sub_dir, secure_name)
+                file.save(file_path)
+
+                # Calculate new dimensions while maintaining aspect ratio
+                new_width, new_height = calculate_new_dimensions(img.width, img.height, target_size)
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                img.save(file_path)
+                saved_files.append(file_path)
+
+                except (OSError, ValueError) as error:
+                    print(f"Error processing file {filename_only}: {error}")
+
+        zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
+        session['zip_path'] = zip_path
+        deletion_delay = 60
+        deletion_time = datetime.now() + timedelta(seconds=deletion_delay)
+        remaining_seconds = int((deletion_time - datetime.now()).total_seconds())
+
+        delete_files_after_delay(target_dir, zip_path, delay=deletion_delay)
+
+        return render_template('custom/ctm-result.html', files=saved_files, remaining_seconds=remaining_seconds)
+
+    return render_template('custom/split_ctm.html', files=[])
+
+
+""" SPLIT CTM END """
+
+
 @app.route('/download')
 def download():
     zip_path = session.get('zip_path')
     if zip_path and os.path.isfile(zip_path):
         return send_file(zip_path, as_attachment=True)
     return 'No file available for download', 404
-
-
-@app.route('/split_ctm')
-def split_ctm():
-    return render_template('custom/split_ctm.html')
 
 
 @app.route('/convert_ctm')
