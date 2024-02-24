@@ -1018,7 +1018,7 @@ button:active {
     display: none;
     position: absolute;
     height: 100%;
-    width: calc(var(--container_width) / 6);
+    width: calc(var(--container_width) / 5);
     z-index: 0;
     left: 0;
     top: 0;
@@ -1094,7 +1094,7 @@ button:active {
     display: none;
     position: absolute;
     height: 100%;
-    width: calc(var(--container_width) / 6);
+    width: calc(var(--container_width) / 5);
     z-index: 0;
     left: 0;
     top: 0;
@@ -1116,23 +1116,27 @@ button:active {
 }
 
 .radio-input2 label:nth-child(1):has(input:checked) ~ .selection1 {
-    transform: translateX(calc(var(--container_width) * 0/5));
+    transform: translateX(calc(var(--container_width) * 0/6));
 }
 
 .radio-input2 label:nth-child(2):has(input:checked) ~ .selection1 {
-    transform: translateX(calc(var(--container_width) * 1/5));
+    transform: translateX(calc(var(--container_width) * 1/6));
 }
 
 .radio-input2 label:nth-child(3):has(input:checked) ~ .selection1 {
-    transform: translateX(calc(var(--container_width) * 2/5));
+    transform: translateX(calc(var(--container_width) * 2/6));
 }
 
 .radio-input2 label:nth-child(4):has(input:checked) ~ .selection1 {
-    transform: translateX(calc(var(--container_width) * 3/5));
+    transform: translateX(calc(var(--container_width) * 3/6));
 }
 
 .radio-input2 label:nth-child(5):has(input:checked) ~ .selection1 {
-    transform: translateX(calc(var(--container_width) * 4/5));
+    transform: translateX(calc(var(--container_width) * 4/6));
+}
+
+.radio-input2 label:nth-child(6):has(input:checked) ~ .selection1 {
+    transform: translateX(calc(var(--container_width) * 5/6));
 }
 
 
@@ -1172,7 +1176,7 @@ button:active {
     display: none;
     position: absolute;
     height: 100%;
-    width: calc(var(--container_width) / 6);
+    width: calc(var(--container_width) / 5);
     z-index: 0;
     left: 0;
     top: 0;
@@ -1194,23 +1198,27 @@ button:active {
 }
 
 .radio-input3 label:nth-child(1):has(input:checked) ~ .selection2 {
-    transform: translateX(calc(var(--container_width) * 0/5));
+    transform: translateX(calc(var(--container_width) * 0/6));
 }
 
 .radio-input3 label:nth-child(2):has(input:checked) ~ .selection2 {
-    transform: translateX(calc(var(--container_width) * 1/5));
+    transform: translateX(calc(var(--container_width) * 1/6));
 }
 
 .radio-input3 label:nth-child(3):has(input:checked) ~ .selection2 {
-    transform: translateX(calc(var(--container_width) * 2/5));
+    transform: translateX(calc(var(--container_width) * 2/6));
 }
 
 .radio-input3 label:nth-child(4):has(input:checked) ~ .selection2 {
-    transform: translateX(calc(var(--container_width) * 3/5));
+    transform: translateX(calc(var(--container_width) * 3/6));
 }
 
 .radio-input3 label:nth-child(5):has(input:checked) ~ .selection2 {
-    transform: translateX(calc(var(--container_width) * 4/5));
+    transform: translateX(calc(var(--container_width) * 4/6));
+}
+
+.radio-input3 label:nth-child(6):has(input:checked) ~ .selection2 {
+    transform: translateX(calc(var(--container_width) * 5/6));
 }
 
 .top-title {
