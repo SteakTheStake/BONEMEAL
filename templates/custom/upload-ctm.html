@@ -43,7 +43,7 @@
         <h4 class="text-center">Split CTM textures in bulk and store output in folders named after the base color file name <br/>
             (automatically renames files with correct extension such as _n or _s)</h4>
     </div>
-    <form action="/split_ctm" id="resizeForm" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for('split_ctm') }}" id="resizeForm" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <div class="form-container">
                 <div class="form-group">
@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <div class="file-upload-container">
                                 <div class="header dropzone" id="fileUploadDropzone">
-                                    <input type="file" class="header2" id="files" name="files" required multiple>
+                                    <input type="file" class="header2" id="files" name="images" required multiple>
                                     <label for="files">
                                         <div class="no-files">
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@
                                         </div>
                                     </label>
                                 </div>
-                                <form id="my-great-dropzone">
+                                <form id="my-great-dropzone" enctype="multipart/form-data">
                                     <div class="fallback file-upload-spacing">
                                         <label for="fileUploadCopy" class="footer">
                                             <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -88,27 +88,27 @@
                         <h3>Width:</h3>
                         <div class="radio-input2">
                             <label>
-                                <input value="value-1" name="num_rows" id="value-1" type="radio" checked="">
+                                <input value="2" name="num_rows" id="value-1" type="radio" checked="">
                                 <span>2 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-2" name="num_rows" id="value-2" type="radio">
+                                <input value="3" name="num_rows" id="value-2" type="radio">
                                 <span>3 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-3" name="num_rows" id="value-3" type="radio">
+                                <input value="4" name="num_rows" id="value-3" type="radio">
                                 <span>4 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-4" name="num_rows" id="value-4" type="radio">
+                                <input value="5" name="num_rows" id="value-4" type="radio">
                                 <span>5 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-5" name="num_rows" id="value-5" type="radio">
+                                <input value="6" name="num_rows" id="value-5" type="radio">
                                 <span>6 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-6" name="num_rows" id="value-6" type="radio">
+                                <input value="8" name="num_rows" id="value-6" type="radio">
                                 <span>8 Blocks</span>
                             </label>
                             <span class="selection1"></span>
@@ -118,27 +118,27 @@
                         <h3>Height:</h3>
                         <div class="radio-input3">
                             <label>
-                                <input value="value-1-2" name="num_columns" id="value-1-2" type="radio" checked="">
+                                <input value="2" name="num_columns" id="value-1-2" type="radio" checked="">
                                 <span>2 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-2-2" name="num_columns" id="value-2-2" type="radio">
+                                <input value="3" name="num_columns" id="value-2-2" type="radio">
                                 <span>3 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-3-2" name="num_columns" id="value-3-2" type="radio">
+                                <input value="4" name="num_columns" id="value-3-2" type="radio">
                                 <span>4 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-4-2" name="num_columns" id="value-4-2" type="radio">
+                                <input value="5" name="num_columns" id="value-4-2" type="radio">
                                 <span>5 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-5-2" name="num_columns" id="value-5-2" type="radio">
+                                <input value="6" name="num_columns" id="value-5-2" type="radio">
                                 <span>6 Blocks</span>
                             </label>
                             <label>
-                                <input value="value-6-2" name="num_columns" id="value-6-2" type="radio">
+                                <input value="8" name="num_columns" id="value-6-2" type="radio">
                                 <span>8 Blocks</span>
                             </label>
                             <span class="selection2"></span>

@@ -7,30 +7,16 @@ from datetime import datetime, timedelta
 from shutil import rmtree
 
 from PIL import Image
-from flask import Flask, request, render_template, session, send_file, url_for
+from flask import Flask, request, render_template, session, send_file, url_for, send_from_directory
 from werkzeug.utils import secure_filename, redirect
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
 app.config['USER_CONTENT'] = 'user-content'
-app.config['UPLOAD_FOLDER'] = 'uploads'
-column_mapping = {
-    "value-1": 2,
-    "value-2": 3,
-    "value-3": 4,
-    "value-4": 5,
-    "value-5": 6,
-    "value-6": 8,
-}
-row_mapping = {
-    "value-1-2": 2,
-    "value-2-2": 3,
-    "value-3-2": 4,
-    "value-4-2": 5,
-    "value-5-2": 6,
-    "value-6-2": 8,
-}
+app.config['UPLOAD_FOLDER'] = 'user-content'
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 
 
 @app.route('/')
@@ -108,7 +94,7 @@ def process_images(directory, size):
 
 # Add a utility function for allowed file types
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png']
 
 
 def calculate_new_dimensions(width, height, target_size):
@@ -124,7 +110,7 @@ def calculate_new_dimensions(width, height, target_size):
 @app.route('/resize', methods=['GET', 'POST'])
 def resize():
     if request.method == 'POST':
-        uploaded_files = request.files.getlist("files")
+        uploaded_files = request.files.getlist("images")
         size_selection = request.form.get('value-radio')  # Get the selected radio button value
 
         # Convert size_selection to actual pixel values
@@ -144,7 +130,7 @@ def resize():
         apply_dither = 'dither' in request.form
 
         now = datetime.today()
-        dir_name = f"BONEMEAL-EXPORT_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        dir_name = f"BONEMEAL-RESIZE_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
         target_dir = os.path.join('root', dir_name)
 
         if not os.path.exists(target_dir):
@@ -201,111 +187,75 @@ def resize():
 """ SPLIT CTM START """
 
 
-def allowed_ctm_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png']
-
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_ctm_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            return redirect(url_for('split_ctm', filename=filename))
-    return render_template('custom/upload-ctm.html')
-
-
-def process_ctm_images(upload_dir, num_rows, num_columns):
-    processed_files = []
-    if not os.path.isdir(upload_dir):
-        print(f"Directory not found or is not a directory: {upload_dir}")
-        return processed_files
-
-    try:
-        for filename in os.listdir(upload_dir):
-            file_path = os.path.join(upload_dir, filename)
-            if allowed_ctm_file(filename):
-                try:
-                    new_files = split_and_save_image(file_path, upload_dir, num_rows, num_columns)
-                    processed_files.extend(new_files)
-                except Exception as e:
-                    print(f"Error processing image {filename}: {e}")
-    except Exception as e:
-        print(f"Error listing directory {upload_dir}: {e}")
-
-    return processed_files
-
-
-def split_and_save_image(file_path, base_path, num_rows, num_columns):
+def split_and_save_image(file_path, num_rows, num_columns):
+    new_filenames = []  # List to store names of new files
     with Image.open(file_path) as img:
-        print(f"Processing image {file_path} with dimensions: {img.size}")
         img_width, img_height = img.size
-
-        if img_width < num_columns or img_height < num_rows:
-            print(f"Image {file_path} is too small to be split into {num_rows} rows and {num_columns} columns.")
-            return []
-
         slice_width, slice_height = img_width // num_columns, img_height // num_rows
+
+        # Determine the appropriate suffix for the file
+        suffix = ".png"
+        if file_path.endswith("_n.png"):
+            suffix = "_n.png"
+        elif file_path.endswith("_s.png"):
+            suffix = "_s.png"
+
         counter = 0
-        new_filenames = []
+
         for row in range(num_rows):
-            for column in range(num_columns):
-                left = column * slice_width
-                upper = row * slice_height
-                right = min((column + 1) * slice_width, img_width)
-                lower = min((row + 1) * slice_height, img_height)
+            for col in range(num_columns):
+                left, upper = col * slice_width, row * slice_height
+                right, lower = left + slice_width, upper + slice_height
+
                 img_cropped = img.crop((left, upper, right, lower))
-                new_filename = f"{base_path}_{counter}.png"
-                img_cropped.save(os.path.join(base_path, new_filename))
+                new_filename = f"{counter}{suffix}"
+                img_cropped.save(os.path.join(os.path.dirname(file_path), new_filename))
                 new_filenames.append(new_filename)
                 counter += 1
-        return new_filenames
+
+    return new_filenames  # Return the list of new filenames
+
+
+def allowed_ctm_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png']
 
 
 @app.route('/split_ctm', methods=['GET', 'POST'])
 def split_ctm():
     if request.method == 'POST':
-        uploaded_files = request.files.getlist("files")
-        row_option = request.form.get('num_columns')
-        column_option = request.form.get('num_rows')
+        if 'images' not in request.files:
+            return 'No images part in the request', 400
 
-        if len(uploaded_files) > 40:
-            return "Error: Too many files. The limit is 40.", 400
+        uploaded_files = request.files.getlist('images')
+        num_rows_selection = request.form.get('num_rows')
+        num_columns_selection = request.form.get('num_columns')
 
-        if row_option is None or column_option is None:
-            return "Please select both width and height options.", 400
+        # Use the mappings to get the integer values
+        num_rows = int(num_rows_selection) if num_rows_selection else 2  # Default to 2 if not provided
+        num_columns = int(num_columns_selection) if num_columns_selection else 2  # Default to 2 if not provided
 
-        try:
-            num_rows = row_mapping.get(row_option, 2)
-            num_columns = column_mapping.get(column_option, 2)
-        except KeyError:
-            return "Invalid row or column selection.", 400
-
+        # Create a unique directory for this upload session
         now = datetime.now()
-        dir_name = f"BONEMEAL-CTM_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
-        target_dir = os.path.join(app.config['USER_CONTENT'], dir_name)
+        upload_session_dir = os.path.join(app.config['USER_CONTENT'], now.strftime("%Y-%m-%d_%H-%M-%S"))
+        os.makedirs(upload_session_dir, exist_ok=True)
 
-        if not os.path.exists(target_dir):
-            os.makedirs(target_dir)
+        processed_files = []
+        for file in uploaded_files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(upload_session_dir, filename)
+                file.save(file_path)
 
-        for files in uploaded_files:
-            if files and allowed_ctm_file(files.filename):
-                filename = secure_filename(files.filename)
-                file_path = os.path.join(target_dir, filename)
-                files.save(file_path)
+                new_files = split_and_save_image(file_path, num_rows, num_columns)
+                processed_files.extend(new_files)
 
-        # Call the process_ctm_images function for each uploaded file
-        processed_files = process_ctm_images(target_dir, num_rows, num_columns)
-        session['processed_files'] = processed_files
-
-        zip_path = zip_directory(target_dir, os.path.join(app.config['USER_CONTENT'], dir_name))
+        # Zip the directory with processed files
+        zip_filename = f"BONEMEAL-CTM_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        zip_path = zip_directory(upload_session_dir, zip_filename)
         session['zip_path'] = zip_path
-        deletion_delay = 60  # Delay in seconds before deletion
-        delete_files_after_delay(target_dir, zip_path, delay=deletion_delay)
 
-        return redirect(url_for('ctm_result'))
+        # Provide a way to download the zip file
+        return render_template('custom/split-success.html', zip_file=zip_filename + '.zip')
 
     return render_template('custom/upload-ctm.html')
 
@@ -313,7 +263,7 @@ def split_ctm():
 @app.route('/ctm_result')
 def ctm_result():
     processed_files = session.get('processed_files', [])
-    return render_template('custom/ctm-result.html', files=processed_files)
+    return render_template('custom/split-success.html', files=processed_files)
 
 
 """ SPLIT CTM END """
