@@ -14,11 +14,6 @@
     src: url("/static/font/MinecraftBold.otf") format("opentype");
 }
 
-@font-face {
-    font-family: 'Standard Galactic Alphabet Regular';
-    src: url('https://www.fontsaddict.com/fontface/standard-galactic-alphabet-regular.ttf');
-}
-
 * {
     font-family: 'MinecraftCHMC', SansSerif, serif;
 }
@@ -63,7 +58,7 @@ body {
     position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.75);
+    transform: translate(-50%, -50%) scale(2);
     animation: splash 5s normal forwards ease-in-out;
 }
 
@@ -72,7 +67,7 @@ body {
 .navbar {
     width: 150px;
     height: 150px;
-    left: 52%;
+    left: 33%;
     line-height: 150px;
     border-radius: 15%;
     text-align: center;
@@ -80,7 +75,7 @@ body {
     margin: auto;
     transition: 0.24s;
     position: relative;
-    background: url('/static/img/bonemeal.gif');
+    background: url('/static/img/bonemeal.gif') no-repeat;
     background-size:150px 150px;
 }
 .navbar:hover{
@@ -483,7 +478,7 @@ body {
     font-size: 13px;
     padding:3em;
     margin: 85vh 15px 15px 0;
-    top: 90%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1.2);
     align-content: center;
@@ -501,6 +496,7 @@ body {
     font-size: 1.2vw;
     color: teal;
     width: 100%;
+    top: -15%;
     position: fixed;
 }
 
@@ -897,6 +893,7 @@ button:active {
 }
 
 .main {
+    transform: translate(-50px);
     flex: 1; /* Each column takes equal space */
     padding: 80px;
     /* Removed width: 100% to allow flex to control the width */

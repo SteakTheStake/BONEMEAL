@@ -187,6 +187,32 @@ def resize():
 """ SPLIT CTM START """
 
 
+def ctm_generator(block_name=None):
+    if request.method == 'POST' and request.form.get('properties'):
+        method = 'repeat'
+        width = request.form.get('width')
+        height = request.form.get('height')
+        tiles = request.form.get('tiles').split(',')
+        symmetry = request.form.get('symmetry')
+
+        # Construct the properties file content
+        properties = f"""method={method}
+        matchTiles={block_name}
+        width={width}
+        height={height}
+        tiles={','.join(tiles)}"""
+
+        if symmetry:
+            properties += f"\nsymmetry={symmetry}"
+
+        # Create the properties file
+        with open('ctm.properties', 'w') as f:
+            f.write(properties)
+
+        # Send the properties file to the user for download
+        return send_file('ctm.properties', as_attachment=True)
+
+
 def split_and_save_image(file_path, num_rows, num_columns):
     new_filenames = []  # List to store names of new files
     with Image.open(file_path) as img:
