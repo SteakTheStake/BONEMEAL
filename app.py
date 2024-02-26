@@ -3,20 +3,29 @@ import os
 import shutil
 import threading
 import time
+import zipfile
 from datetime import datetime, timedelta
+from fileinput import filename
 from shutil import rmtree
 
 from PIL import Image
-from flask import Flask, request, render_template, session, send_file, url_for, send_from_directory
+from celery import Celery
+from celery.bin import celery
+from flask import Flask, request, render_template, session, send_file, url_for, send_from_directory, jsonify
 from werkzeug.utils import secure_filename, redirect
 
 app = Flask(__name__)
 app.secret_key = 'summit_mc_xyz'
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
-app.config['USER_CONTENT'] = 'user-content'
-app.config['UPLOAD_FOLDER'] = 'user-content'
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
+app.config['CTM_USER_CONTENT'] = 'user-data'
+if not os.path.exists(app.config['CTM_USER_CONTENT']):
+    os.makedirs(app.config['CTM_USER_CONTENT'])
+app = Flask(__name__)
+app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
 
 
 @app.route('/')
@@ -25,11 +34,6 @@ def home():
 
 
 """ RESIZE START """
-
-
-def zip_directory(folder_path, output_filename):
-    shutil.make_archive(output_filename, 'zip', folder_path)
-    return output_filename + '.zip'
 
 
 def delete_files_after_delay(directory_path, zip_path, delay=60):
@@ -130,8 +134,8 @@ def resize():
         apply_dither = 'dither' in request.form
 
         now = datetime.today()
-        dir_name = f"BONEMEAL-RESIZE_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
-        target_dir = os.path.join('root', dir_name)
+        dir_name = f"BONEMEAL_RESIZE_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        target_dir = os.path.join('user_content/resize', dir_name)
 
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
@@ -187,7 +191,57 @@ def resize():
 """ SPLIT CTM START """
 
 
-def ctm_generator(block_name=None):
+@celery.task
+def split_and_save_image(target_dir, uploaded_files, num_rows, num_columns):
+    processed_files = []
+    for file in uploaded_files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(target_dir, filename)
+            file.save(file_path)
+
+            new_filenames = split_image(file_path, num_rows, num_columns)
+            processed_files.extend(new_filenames)
+    return processed_files
+
+
+def split_image(file_path, num_rows, num_columns):
+    new_filenames = []  # List to store names of new files
+    with Image.open(file_path) as img:
+        img_width, img_height = img.size
+        slice_width, slice_height = img_width // num_columns, img_height // num_rows
+        counter = 0
+        for row in range(num_rows):
+            for col in range(num_columns):
+                left, upper = col * slice_width, row * slice_height
+                right, lower = left + slice_width, upper + slice_height
+                img_cropped = img.crop((left, upper, right, lower))
+                new_filename = f"{counter}.png"
+                img_cropped.save(os.path.join(os.path.dirname(file_path), new_filename))
+                new_filenames.append(new_filename)
+                counter += 1
+    return new_filenames
+
+
+def allowed_ctm_file(filename_ctm):
+    return '.' in filename and filename_ctm.rsplit('.', 1)[1].lower() in ['png']
+
+
+def zip_directory(directory_path, zip_filename):
+    # Create a ZipFile object
+    with zipfile.ZipFile(os.path.join(directory_path, f"{zip_filename}.zip"), 'w') as zip_file:
+        # Iterate over all the files in the directory
+        for root, dirs, files in os.walk(directory_path):
+            for file in files:
+                # Add the file to the ZipFile object
+                zip_file.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), directory_path))
+
+    # Return the path to the zip file
+    return os.path.join(directory_path, f"{zip_filename}.zip")
+
+
+@app.route('/ctm_generator', methods=['GET', 'POST'])
+def ctm_generator():
     if request.method == 'POST' and request.form.get('properties'):
         method = 'repeat'
         width = request.form.get('width')
@@ -196,12 +250,11 @@ def ctm_generator(block_name=None):
         symmetry = request.form.get('symmetry')
 
         # Construct the properties file content
-        properties = f"""method={method}
-        matchTiles={block_name}
-        width={width}
-        height={height}
-        tiles={','.join(tiles)}"""
-
+        properties = (f"method={method}\n"
+                      f"matchTiles={filename}\n"
+                      f"width={width}\n"
+                      f"height={height}\n"
+                      f"tiles={','.join(tiles)}")
         if symmetry:
             properties += f"\nsymmetry={symmetry}"
 
@@ -213,86 +266,68 @@ def ctm_generator(block_name=None):
         return send_file('ctm.properties', as_attachment=True)
 
 
-def split_and_save_image(file_path, num_rows, num_columns):
-    new_filenames = []  # List to store names of new files
-    with Image.open(file_path) as img:
-        img_width, img_height = img.size
-        slice_width, slice_height = img_width // num_columns, img_height // num_rows
-
-        # Determine the appropriate suffix for the file
-        suffix = ".png"
-        if file_path.endswith("_n.png"):
-            suffix = "_n.png"
-        elif file_path.endswith("_s.png"):
-            suffix = "_s.png"
-
-        counter = 0
-
-        for row in range(num_rows):
-            for col in range(num_columns):
-                left, upper = col * slice_width, row * slice_height
-                right, lower = left + slice_width, upper + slice_height
-
-                img_cropped = img.crop((left, upper, right, lower))
-                new_filename = f"{counter}{suffix}"
-                img_cropped.save(os.path.join(os.path.dirname(file_path), new_filename))
-                new_filenames.append(new_filename)
-                counter += 1
-
-    return new_filenames  # Return the list of new filenames
-
-
-def allowed_ctm_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png']
-
-
 @app.route('/split_ctm', methods=['GET', 'POST'])
 def split_ctm():
     if request.method == 'POST':
         if 'images' not in request.files:
             return 'No images part in the request', 400
-
         uploaded_files = request.files.getlist('images')
         num_rows_selection = request.form.get('num_rows')
         num_columns_selection = request.form.get('num_columns')
-
         # Use the mappings to get the integer values
         num_rows = int(num_rows_selection) if num_rows_selection else 2  # Default to 2 if not provided
         num_columns = int(num_columns_selection) if num_columns_selection else 2  # Default to 2 if not provided
-
         # Create a unique directory for this upload session
         now = datetime.now()
-        upload_session_dir = os.path.join(app.config['USER_CONTENT'], now.strftime("%Y-%m-%d_%H-%M-%S"))
-        os.makedirs(upload_session_dir, exist_ok=True)
+        upload_session_dir = f"BONEMEAL_CTM_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
+        target_dir = os.path.join('user-data/ctm', upload_session_dir)
 
-        processed_files = []
-        for file in uploaded_files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file_path = os.path.join(upload_session_dir, filename)
-                file.save(file_path)
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
 
-                new_files = split_and_save_image(file_path, num_rows, num_columns)
-                processed_files.extend(new_files)
+        # Create a Celery task and store the task ID in the session
+        task = split_and_save_image.delay(target_dir, uploaded_files, num_rows, num_columns)
+        session['task_id'] = task.id
 
-        # Zip the directory with processed files
-        zip_filename = f"BONEMEAL-CTM_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
-        zip_path = zip_directory(upload_session_dir, zip_filename)
-        session['zip_path'] = zip_path
-
-        # Provide a way to download the zip file
-        return render_template('custom/split-success.html', zip_file=zip_filename + '.zip')
-
+        return render_template('custom/progress.html', task_id=task.id)
     return render_template('custom/upload-ctm.html')
 
 
 @app.route('/ctm_result')
 def ctm_result():
-    processed_files = session.get('processed_files', [])
-    return render_template('custom/split-success.html', files=processed_files)
+    task_id = session.get('task_id')
+    task = celery.AsyncResult(task_id)
+    if task.state == 'SUCCESS':
+        processed_files = task.result
+        zip_filename = f"BONEMEAL_CTM_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+        zip_path = zip_directory(os.path.join('user-data/ctm', task_id), zip_filename)
+        return render_template('custom/ctm-result.html', files=processed_files, zip_file=f"{zip_filename}.zip")
+    else:
+        return render_template('custom/progress.html', task_id=task_id)
 
 
 """ SPLIT CTM END """
+
+
+@app.route('/task_status/<task_id>')
+def task_status(task_id):
+    task = celery.AsyncResult(task_id)
+    if task.state == 'PENDING':
+        response = {
+            'state': 'PENDING',
+            'progress': 0
+        }
+    elif task.state == 'FAILURE':
+        response = {
+            'state': 'FAILURE',
+            'progress': 100
+        }
+    else:
+        response = {
+            'state': 'SUCCESS',
+            'progress': 100
+        }
+    return jsonify(response)
 
 
 @app.route('/download')

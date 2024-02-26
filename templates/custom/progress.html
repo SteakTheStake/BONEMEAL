@@ -30,22 +30,16 @@
     <div class='rainbow'></div>
     <div class='rainbow'></div>
     <div class='rainbow'></div>
+    <div id="particles-js"></div>
     <div class='h'></div>
     <div class='v'></div>
 </div>
 <div class="container">
-    <div class="float"><a href="javascript:delay('/split_ctm')" id="clickSound"><img src="static/img/back.png" alt="Back"></a></div>
-    <h1 class="text-center">CTM RESULTS | BONEMEAL</h1>
-    <h4 class="text-center">Not satisfied? Click the back button and tweak the settings</h4>
+    <h1 class="text-center">Your images are being developed</h1>
     <!-- Display Area -->
     <div id="resultArea" class="mt-4 output">
-        <h1>Split CTM Output</h1>
-        <a href="/download">Download All Images</a>
-        <div id="countdown"></div>
-        <div id="output-logs">
-            {% for file in files %}
-                <p>Resized {{ file }}</p>
-            {% endfor %}
+        <div id="progress-bar">
+            <div id="progress-bar-value"></div>
         </div>
     </div>
 </div>
@@ -53,25 +47,44 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
+<!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    window.onload = function() {
-        var remainingSeconds = {{ remaining_seconds }};
-        var countdownElement = document.getElementById('countdown');
+    // Function to update the progress bar
+    function updateProgress(progress) {
+        var progressBar = document.getElementById("progress-bar");
+        var progressValue = document.getElementById("progress-value");
 
-        var interval = setInterval(function() {
-            var minutes = Math.floor(remainingSeconds / 60);
-            var seconds = remainingSeconds % 60;
-            countdownElement.innerHTML = minutes + " minutes " + seconds + " seconds until deletion";
+        progressValue.style.width = progress + "%";
 
-            if (remainingSeconds <= 0) {
-                clearInterval(interval);
-                countdownElement.innerHTML = "The files have been deleted.";
-            }
-            remainingSeconds--;
-        }, 1000);
+        if (progress === 100) {
+            // Redirect to the result page when progress reaches 100%
+            window.location.href = "/ctm_success";
+        }
+    }
+
+    // Get the task ID from the URL
+    var task_id = "{{ task_id }}";
+
+    // Create a WebSocket connection to the Celery task status endpoint
+    var socket = new WebSocket("ws://localhost:5000/task_status/" + task_id);
+
+    // Handle WebSocket messages
+    socket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+
+        // Update the progress bar based on the task state and progress
+        if (data.state === "SUCCESS") {
+            updateProgress(100);
+        } else if (data.state === "PENDING") {
+            updateProgress(0);
+        } else {
+            updateProgress(data.progress);
+        }
     };
 </script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 </body>
 </html>
