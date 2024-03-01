@@ -30,7 +30,7 @@ celery.conf.update(app.config)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('custom/progress.html')
 
 
 """ RESIZE START """

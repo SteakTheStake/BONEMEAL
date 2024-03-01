@@ -9,7 +9,7 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="rainbow-blur">
+<!--<div class="rainbow-blur">
     <div class='rainbow'></div>
     <div class='rainbow'></div>
     <div class='rainbow'></div>
@@ -33,15 +33,14 @@
     <div id="particles-js"></div>
     <div class='h'></div>
     <div class='v'></div>
-</div>
+</div>-->
+<div id="particles-js"></div>
 <div class="container">
-    <h1 class="text-center">Your images are being developed</h1>
+    <h1 class="text-center">Your images are growing...</h1>
     <!-- Display Area -->
-    <div id="resultArea" class="mt-4 output">
         <div id="progress-bar">
             <div id="progress-bar-value"></div>
         </div>
-    </div>
 </div>
 <!-- JavaScript for interactive elements -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -85,6 +84,7 @@
 </script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+<script src="{{ url_for('static', filename='js/particles-js/particles.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 </body>
 </html>
