@@ -18,9 +18,35 @@
 }
 
 body {
-    background-color: #260d62;
+    background: #0e0425;
     color: #ffffff;
     overflow-x: hidden;
+}
+
+canvas {
+    background: rgba(0, 0, 0, 0);
+}
+
+#particles-js {
+    z-index: 1000;
+}
+
+.progress-body {
+    overflow-x: hidden;
+    animation: progress ease-in-out 8s forwards;
+}
+
+
+@keyframes progress {
+    0% {
+        color: #ffffff;
+        background-color: #211c1c;
+    }
+
+    100% {
+        color: #40ff00;
+        background-color: #237300;
+    }
 }
 
 .body-index {
@@ -53,7 +79,7 @@ body {
     position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(2);
+    transform: translate(-50%, -50%);
     animation: splash 5s normal forwards ease-in-out;
 }
 
@@ -62,7 +88,7 @@ body {
 .navbar {
     width: 150px;
     height: 150px;
-    left: 33%;
+    left: 50%;
     line-height: 150px;
     border-radius: 15%;
     text-align: center;
@@ -344,102 +370,102 @@ body {
     transform-origin: top right;
 }
 .rainbow:nth-child(1) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 53.875s linear infinite slide;
     animation-delay: -2.25s;
 }
 .rainbow:nth-child(2) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 52.75s linear infinite slide;
     animation-delay: -4.5s;
 }
 .rainbow:nth-child(3) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 51.625s linear infinite slide;
     animation-delay: -6.75s;
 }
 .rainbow:nth-child(4) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 50.5s linear infinite slide;
     animation-delay: -9s;
 }
 .rainbow:nth-child(5) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 49.375s linear infinite slide;
     animation-delay: -11.25s;
 }
 .rainbow:nth-child(6) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 48.25s linear infinite slide;
     animation-delay: -13.5s;
 }
 .rainbow:nth-child(7) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 47.125s linear infinite slide;
     animation-delay: -15.75s;
 }
 .rainbow:nth-child(8) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 46s linear infinite slide;
     animation-delay: -18s;
 }
 .rainbow:nth-child(9) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 44.875s linear infinite slide;
     animation-delay: -20.25s;
 }
 .rainbow:nth-child(10) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 43.75s linear infinite slide;
     animation-delay: -22.5s;
 }
 .rainbow:nth-child(11) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 42.625s linear infinite slide;
     animation-delay: -24.75s;
 }
 .rainbow:nth-child(12) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 41.5s linear infinite slide;
     animation-delay: -27s;
 }
 .rainbow:nth-child(13) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 40.375s linear infinite slide;
     animation-delay: -29.25s;
 }
 .rainbow:nth-child(14) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 39.25s linear infinite slide;
     animation-delay: -31.5s;
 }
 .rainbow:nth-child(15) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 38.125s linear infinite slide;
     animation-delay: -33.75s;
 }
 .rainbow:nth-child(16) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 37s linear infinite slide;
     animation-delay: -36s;
 }
 .rainbow:nth-child(17) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 35.875s linear infinite slide;
     animation-delay: -38.25s;
 }
 .rainbow:nth-child(18) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 34.75s linear infinite slide;
     animation-delay: -40.5s;
 }
 .rainbow:nth-child(19) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 33.625s linear infinite slide;
     animation-delay: -42.75s;
 }
 .rainbow:nth-child(20) {
-    box-shadow: -130px 0 80px 40px #7f81d7, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(149, 62, 255, 0.8), 50px 0 50px 25px rgba(184, 105, 236, 0.91), 130px 0 80px 40px white;
+    box-shadow: -130px 0 80px 40px #3b3fff, -50px 0 50px 25px rgb(161, 0, 255), 0 0 50px 25px rgba(115, 0, 255, 0.8), 50px 0 50px 25px rgba(166, 65, 232, 0.91), 130px 0 80px 40px white;
     animation: 32.5s linear infinite slide;
     animation-delay: -45s;
 }
@@ -659,6 +685,7 @@ input .header2 {
     background-size: 200% 100%;
     animation: gradient 5s ease infinite;
     box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    transform: scale(0.6);
 }
 
 .form-container button:active {
@@ -1262,7 +1289,7 @@ button:active {
 #progress-bar {
     display: block;
     --height-of-loader: 8px;
-    --loader-color: #0071e2;
+    --loader-color: #40ff00;
     width: 100%;
     height: var(--height-of-loader);
     border-radius: 30px;
