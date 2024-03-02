@@ -28,7 +28,6 @@ canvas {
 }
 
 #particles-js {
-    z-index: 1000;
 }
 
 .progress-body {
@@ -449,6 +448,9 @@ canvas {
     vertical-align: bottom;
 }
 
+.rain {
+    z-index: -9;
+}
 
 /* ---- particles.js container ---- */
 

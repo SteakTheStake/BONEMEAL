@@ -33,6 +33,11 @@ def home():
     return render_template('index.html')
 
 
+@app.route('/progress')
+def progress():
+    return render_template('custom/progress.html')
+
+
 """ RESIZE START """
 
 
