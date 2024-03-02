@@ -88,7 +88,7 @@ canvas {
 .navbar {
     width: 150px;
     height: 150px;
-    left: 50%;
+    left: 35%;
     line-height: 150px;
     border-radius: 15%;
     text-align: center;
@@ -106,8 +106,8 @@ canvas {
 .navbar .menu{
     list-style: none;
     position: absolute;
-    top:-175px;
-    left: -95px;
+    top:-114%;
+    left: -65%;
     margin: 0;
     padding: 0;
     border:150px solid transparent;
@@ -260,51 +260,7 @@ canvas {
     background: rgba(170, 0, 255, 0.105);
     background-blend-mode: screen;
 }
-/*
-.neonText {
-    color: #fff;
-    text-shadow:
-            0 0 7px #fff,
-            0 0 10px #fff,
-            0 0 21px #fff,
-            0 0 42px #af6cff,
-            0 0 82px #af6cff,
-            0 0 92px #af6cff,
-            0 0 102px #af6cff,
-            0 0 151px #af6cff;
-}
-@keyframes pulsate {
 
-    100% {
-
-        text-shadow: 0 0 4px #fff,
-        0 0 11px #fff,
-        0 0 19px #fff,
-        0 0 40px #af6cff,
-        0 0 80px #af6cff,
-        0 0 90px #af6cff,
-        0 0 100px #af6cff,
-        0 0 150px #af6cff;
-
-    }
-
-    0% {
-
-        text-shadow: 0 0 2px #fff,
-        0 0 4px #fff,
-        0 0 6px #fff,
-        0 0 10px #af6cff,
-        0 0 45px #af6cff,
-        0 0 55px #af6cff,
-        0 0 70px #af6cff,
-        0 0 80px #af6cff;
-
-    }
-}
-.pulsate {
-    animation: pulsate 1.5s infinite alternate;
-}
-*/
 .float {
     padding: 25px;
     position: fixed;
