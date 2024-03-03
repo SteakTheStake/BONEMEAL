@@ -899,14 +899,29 @@ button:active {
 /* Example media query for smaller screens */
 @media (max-width: 600px) {
     .main {
-        flex-basis: 100%; /* Each column takes full width on small screens */
+    }
+
+    .navbar {
+        left: 0;
     }
 
     body {
-        flex-basis: 100%; /* Each column takes full width on small screens */
 
     }
 }
+@media (max-width: 770px) {
+    .main {
+    }
+
+    .navbar {
+        left: 0;
+    }
+
+    body {
+
+    }
+}
+
 
 .bottom {
     padding: 5px 0;
