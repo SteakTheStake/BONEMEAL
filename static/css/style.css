@@ -628,7 +628,7 @@ input .header2 {
 }
 
 .form-container {
-    width: 800px;
+    width: 100%;
     background-color: rgba(0, 110, 255, 0.041);
     border: 2px solid transparent;
     padding: 32px 24px;
