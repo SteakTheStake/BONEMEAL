@@ -15,7 +15,7 @@ from flask import Flask, request, render_template, session, send_file, url_for, 
 from werkzeug.utils import secure_filename, redirect
 
 app = Flask(__name__)
-app.secret_key = 'summit_mc_xyz'
+app.secret_key = ''
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 app.config['CTM_USER_CONTENT'] = 'user-data'
 if not os.path.exists(app.config['CTM_USER_CONTENT']):
@@ -140,7 +140,7 @@ def resize():
 
         now = datetime.today()
         dir_name = f"BONEMEAL_RESIZE_{now.strftime('%Y-%m-%d_%H-%M-%S')}"
-        target_dir = os.path.join('user_content/resize', dir_name)
+        target_dir = os.path.join('user-data/resize', dir_name)
 
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
@@ -178,7 +178,7 @@ def resize():
                 except (OSError, ValueError) as error:
                     print(f"Error processing file {filename_only}: {error}")
 
-        zip_path = zip_directory(target_dir, os.path.join('root', dir_name))
+        zip_path = zip_directory(target_dir, os.path.join('user-data/resize', dir_name))
         session['zip_path'] = zip_path
         deletion_delay = 60
         deletion_time = datetime.now() + timedelta(seconds=deletion_delay)
@@ -234,12 +234,15 @@ def allowed_ctm_file(filename_ctm):
 
 def zip_directory(directory_path, zip_filename):
     # Create a ZipFile object
-    with zipfile.ZipFile(os.path.join(directory_path, f"{zip_filename}.zip"), 'w') as zip_file:
-        # Iterate over all the files in the directory
-        for root, dirs, files in os.walk(directory_path):
-            for file in files:
-                # Add the file to the ZipFile object
-                zip_file.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), directory_path))
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+
+        with zipfile.ZipFile(os.path.join(directory_path, f"{zip_filename}.zip"), 'w') as zip_file:
+            # Iterate over all the files in the directory
+            for root, dirs, files in os.walk(directory_path):
+                for file in files:
+                    # Add the file to the ZipFile object
+                    zip_file.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), directory_path))
 
     # Return the path to the zip file
     return os.path.join(directory_path, f"{zip_filename}.zip")

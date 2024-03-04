@@ -8,10 +8,10 @@ particlesJS("particles-js", {
             }
         },
         "color": {
-            "value": "#2cff00"
+            "value": "#7bff00"
         },
         "shape": {
-            "type": ["image", "img"],
+            "type": ["circle", "img"],
             "image": {
                 "src": "https://raw.githubusercontent.com/SteakTheStake/BONEMEAL/main/static/img/growth.svg",
                 "width": 100,
@@ -29,7 +29,7 @@ particlesJS("particles-js", {
             }
         },
         "size": {
-            "value": 8,
+            "value": 4,
             "random": true,
             "anim": {
                 "enable": false,
@@ -65,7 +65,7 @@ particlesJS("particles-js", {
         "events": {
             "onhover": {
                 "enable": true,
-                "mode": "bubble"
+                "mode": ""
             },
             "onclick": {
                 "enable": true,

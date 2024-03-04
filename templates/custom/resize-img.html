@@ -9,14 +9,41 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
+<div id="particles-js"></div>
+<div class="rainbow-blur">
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='rainbow'></div>
+    <div class='h'></div>
+    <div class='v'></div>
+</div>
 <div class="uploaded-files">
     <img src="" id="preview" alt="Uploaded Images">
 </div>
-<main class="container main">
+<main class="container main2">
     <div>
-        <div class="float"><a href="javascript:delay('/')" id="clickSound"><img src="/static/img/back.png" alt="Back"></a></div>
-        <h1 class="text-center">RESIZE | BONEMEAL</h1>
-        <h4 class="text-center">Resize textures in bulk and convert to indexed color for better in-game performance</h4>
+        <div class="float"><a href="javascript:delay('/')" id="clickSound"><img src="static/img/back.png" alt="Back"></a></div>
+        <div class="text-center-both">
+            <h1 class="text-center">RESIZE | BONEMEAL</h1>
+            <h4 class="text-center">Resize textures in bulk and convert to indexed color for better in-game performance</h4>
+        </div>
     </div>
     <form action="/resize" id="resizeForm" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -43,7 +70,7 @@
                                     </div>
                                     <form id="my-great-dropzone">
                                         <div class="fallback file-upload-spacing">
-                                            <label for="fileUploadCopy" class="footer">
+                                            <label for="fileUploadCopy" class="footer2">
                                                 <svg fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -117,10 +144,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="{{ url_for('static', filename='/js/script.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/sound.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/uploaded-files.js') }}"></script>
-<script src="{{ url_for('static', filename='js/rain-particles.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
+<script src="{{ url_for('static', filename='js/uploaded-files.js') }}"></script>
+<script src="{{ url_for('static', filename='js/particles.js') }}"></script>
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 <script>
     function allowed_file(filename) {
