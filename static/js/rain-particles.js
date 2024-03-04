@@ -1,28 +1,21 @@
 particlesJS("particles-js", {
     "particles": {
         "number": {
-            "value": 110,
+            "value": 128,
             "density": {
                 "enable": true,
-                "value_area": 666.7611244926355
+                "value_area": 400
             }
         },
         "color": {
-            "value": "#53c5ff"
+            "value": "#00a4ff"
         },
         "shape": {
-            "type": "image",
-            "stroke": {
-                "width": 0,
-                "color": "#000000"
-            },
-            "polygon": {
-                "nb_sides": 3
-            },
+            "type": ["image", "img"],
             "image": {
                 "src": "https://raw.githubusercontent.com/SteakTheStake/BONEMEAL/main/static/img/rain.svg",
-                "width": 50,
-                "height": 90
+                "width": 200,
+                "height": 200
             }
         },
         "opacity": {
@@ -40,7 +33,7 @@ particlesJS("particles-js", {
             "random": true,
             "anim": {
                 "enable": false,
-                "speed": 40,
+                "speed": 60,
                 "size_min": 0.1,
                 "sync": false
             }
@@ -54,21 +47,21 @@ particlesJS("particles-js", {
         },
         "move": {
             "enable": true,
-            "speed": 26.670444979705422,
+            "speed": 12,
             "direction": "bottom",
-            "random": true,
+            "random": false,
             "straight": true,
             "out_mode": "out",
             "bounce": false,
             "attract": {
                 "enable": false,
-                "rotateX": 0,
-                "rotateY": 0
+                "rotateX": 600,
+                "rotateY": 1200
             }
         }
     },
     "interactivity": {
-        "detect_on": "canvas",
+        "detect_on": "window",
         "events": {
             "onhover": {
                 "enable": false,
@@ -78,7 +71,7 @@ particlesJS("particles-js", {
                 "enable": false,
                 "mode": "repulse"
             },
-            "resize": true
+            "resize": false
         },
         "modes": {
             "grab": {
@@ -106,5 +99,5 @@ particlesJS("particles-js", {
             }
         }
     },
-    "retina_detect": true
+    "retina_detect": false
 });

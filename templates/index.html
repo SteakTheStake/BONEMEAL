@@ -12,30 +12,7 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body style="overflow: hidden">
-<div class="rainbow-blur">
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='rainbow'></div>
-    <div class='h'></div>
-    <div class='v'></div>
-</div>
+<div id="particles-js"></div>
 <div class="container main">
     <div class="bonemeal">
             <div class="row">
@@ -48,7 +25,7 @@
                             <li><a href="javascript:delay('#')" class="Tile">Soon</a></li>
                             <li><a href="javascript:delay('#')" class="Merge">Soon</a></li>
                             <li><a href="javascript:delay('#')" class="placeholder">Soon</a></li>
-                            <li><a href="javascript:delay('/documentation')" class="documentation">Documentation</a></li>
+                            <li><a href="javascript:delay('/documentation')" class="documentation">Docs</a></li>
                             <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
                             <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
                         </ul>
@@ -74,7 +51,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/rain-particles.js') }}"></script>
 <script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 <script>
     document.getElementById("year").innerHTML = new Date().getFullYear();

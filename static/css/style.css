@@ -28,6 +28,11 @@ canvas {
 }
 
 #particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background: no-repeat 50% 50%;
 }
 
 .progress-body {
@@ -76,9 +81,9 @@ canvas {
 
 .bonemeal {
     position: relative;
-    top: 50%;
+    top: 70%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translateY(50%) scale(1.5);
     animation: splash 5s normal forwards ease-in-out;
 }
 
@@ -463,7 +468,6 @@ canvas {
 .rainbow-blur {
     transform: scale(2.5, 2.5);
     opacity: 0.75;
-    filter: brightness(2) blur(1px) saturate(1.5);
     image-rendering: pixelated;
 }
 
@@ -899,6 +903,23 @@ button:active {
 /* Example media query for smaller screens */
 @media (max-width: 600px) {
     .main {
+        padding: 1rem;
+    }
+
+    .navbar {
+        left: 0;
+    }
+
+    body {
+
+    }
+    .bottom-div {
+        margin: 15px 0 0;
+        padding: 25px;
+    }
+}
+@media (max-width: 770px) {
+    .main {
     }
 
     .navbar {
@@ -909,12 +930,12 @@ button:active {
 
     }
 }
-@media (max-width: 770px) {
+@media (min-width: 770px) {
     .main {
     }
 
     .navbar {
-        left: 0;
+        left: 55%;
     }
 
     body {
