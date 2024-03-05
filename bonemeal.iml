@@ -10,7 +10,7 @@
       <excludeFolder url="file://$MODULE_DIR$/static/target" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (BONEMEAL)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="w3-theme-black" level="application" />
     <orderEntry type="library" name="w3" level="application" />

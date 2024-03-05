@@ -19,9 +19,9 @@
 
 
 body {
-    background: rgba(14,4,37,1);
+    background: #17063b;
     color: #ffffff;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 
@@ -1409,14 +1409,14 @@ button:active {
 
 .bg {
     animation:slide 3s ease-in-out infinite alternate;
-    background-image: linear-gradient(-60deg, #1b022a 50%, #16053a 50%);
+    background-image: linear-gradient(-60deg, rgba(27, 2, 42, 0.7) 0, #5100ff 70%);
     bottom:0;
     left:-50%;
     opacity:.5;
     position:fixed;
     right:-50%;
     top:0;
-    z-index:-1;
+    z-index: 999999999;
 }
 
 .bg2 {
@@ -1440,5 +1440,5 @@ button:active {
 .gradient {
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(at 300px 300px,  0, #120431 70%);
+    background-image: radial-gradient(at 300px 300px, rgba(81, 0, 255, 0.7) 0, #17063b 70%);
 }
