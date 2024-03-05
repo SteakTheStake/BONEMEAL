@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from fileinput import filename
 from shutil import rmtree
 
+import celeryconfig
 from PIL import Image
 from celery import Celery
 from celery.bin import celery
@@ -16,6 +17,7 @@ from werkzeug.utils import secure_filename, redirect
 
 # Create a Celery instance using the broker URL from Flask app
 app = Celery('tasks', broker='CELERY_BROKER_URL')
+app.config_from_object(celeryconfig)
 
 """ SPLIT """
 
