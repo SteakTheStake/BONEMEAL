@@ -20,7 +20,7 @@ if not os.path.exists(app.config['CTM_USER_CONTENT']):
     os.makedirs(app.config['CTM_USER_CONTENT'])
 app = Flask(__name__)
 app.config['CELERY_BROKER_URL'] = 'redis://162.33.23.205:6379/1'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://162.33.23.205:6379/1'
+app.config['result_backend'] = 'redis://162.33.23.205:6379/1'
 
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)

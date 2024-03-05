@@ -5,6 +5,6 @@ CELERY_BROKER_URL = 'redis://162.33.23.205:6379/1'
 imports = ('app.tasks',)
 
 ## Using the database to store task state and results.
-CELERY_RESULT_BACKEND = 'redis://162.33.23.205:6379/1'
+result_backend = 'redis://162.33.23.205:6379/1'
 
 task_annotations = {'tasks.add': {'rate_limit': '10/s'}}
