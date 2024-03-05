@@ -13,7 +13,7 @@ from flask import Flask, request, render_template, session, send_file, jsonify
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = ''
+app.secret_key = 'xbMiBex9CnHnYB9reVQEdGbXp7EttqJgH0VpSyuQ4tA0iUk2uL'
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 app.config['CTM_USER_CONTENT'] = 'user-data'
 if not os.path.exists(app.config['CTM_USER_CONTENT']):
