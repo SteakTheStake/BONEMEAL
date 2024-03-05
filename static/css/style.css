@@ -40,7 +40,7 @@ canvas {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background: radial-gradient(circle at 50% 100%, rgb(9, 0, 42), rgb(71, 25, 121)) no-repeat 50% 50%;
+    /*background: radial-gradient(circle at 50% 100%, rgb(9, 0, 42), rgb(71, 25, 121)) no-repeat 50% 50%;*/
 }
 #particles-js2 {
     position: absolute;
@@ -1405,4 +1405,40 @@ button:active {
 #progress-bar-value {
     width: 0;
     height: 100%;
+}
+
+.bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #1b022a 50%, #16053a 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+}
+
+.bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+}
+
+.bg3 {
+    animation-duration:5s;
+}
+
+@keyframes slide {
+    0% {
+        transform:translateX(-25%);
+    }
+    100% {
+        transform:translateX(25%);
+    }
+}
+
+.gradient {
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(at 300px 300px,  0, #120431 70%);
 }
