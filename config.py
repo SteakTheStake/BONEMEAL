@@ -1,5 +1,6 @@
 # Import the necessary modules.
 import os
+import secrets
 
 # Set the secret key. This is used to protect your application from CSRF attacks.
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -9,3 +10,5 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
 
 # Set the debug mode. This is used to enable debugging features in your application.
 DEBUG = os.environ.get('DEBUG')
+
+secret_key = secrets.token_urlsafe(24)

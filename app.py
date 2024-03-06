@@ -3,9 +3,11 @@ import os
 from datetime import datetime, timedelta
 from fileinput import filename
 
+from flask_session import Session
+
+from config import secret_key
 from task import allowed_ctm_file, apply_diffusion_dither, calculate_new_dimensions, zip_directory, \
     delete_files_after_delay, split_and_save_image
-
 from PIL import Image
 from celery import Celery
 from celery.bin import celery
@@ -13,12 +15,18 @@ from flask import Flask, request, render_template, session, send_file, jsonify
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'xbMiBex9CnHnYB9reVQEdGbXp7EttqJgH0VpSyuQ4tA0iUk2uL'
+Session(app)
+if 'SECRET_KEY' in os.environ:
+    app.secret_key = os.environ['SECRET_KEY']
+else:
+    # Generate a new secret key and store it in the environment variable
+    app.secret_key = os.urandom(24)
+    os.environ['SECRET_KEY'] = app.secret_key.hex()
 app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 app.config['CTM_USER_CONTENT'] = 'user-data'
 if not os.path.exists(app.config['CTM_USER_CONTENT']):
     os.makedirs(app.config['CTM_USER_CONTENT'])
-app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/1'
 app.config['result_backend'] = 'redis://localhost:6379/1'
 
@@ -101,8 +109,8 @@ def resize():
                 except (OSError, ValueError) as error:
                     print(f"Error processing file {filename_only}: {error}")
 
-        zip_path = zip_directory(target_dir, os.path.join('user-data/resize', dir_name))
-        session['zip_path'] = zip_path
+        zip_filename = f"{dir_name}.zip"
+        zip_path = zip_directory(target_dir, zip_filename)
         deletion_delay = 60
         deletion_time = datetime.now() + timedelta(seconds=deletion_delay)
         remaining_seconds = int((deletion_time - datetime.now()).total_seconds())
@@ -242,5 +250,7 @@ def documentation():
     return render_template('custom/documentation.html')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    app.secret_key = secret_key
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(host='0.0.0.0')
