@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta
 from fileinput import filename
 
-from flask_session import Session
+from flask_session.__init__ import Session
 
 from config import secret_key
 from task import allowed_ctm_file, apply_diffusion_dither, calculate_new_dimensions, zip_directory, \
