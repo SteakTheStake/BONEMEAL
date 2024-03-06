@@ -3,6 +3,7 @@ import os
 from datetime import datetime, timedelta
 from fileinput import filename
 
+from flask import Flask, request, render_template, session, send_file, jsonify
 from flask_session import Session
 
 from config import secret_key
@@ -11,10 +12,11 @@ from task import allowed_ctm_file, apply_diffusion_dither, calculate_new_dimensi
 from PIL import Image
 from celery import Celery
 from celery.bin import celery
-from flask import Flask, request, render_template, session, send_file, jsonify
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 if 'SECRET_KEY' in os.environ:
     app.secret_key = os.environ['SECRET_KEY']
@@ -26,7 +28,6 @@ app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 app.config['CTM_USER_CONTENT'] = 'user-data'
 if not os.path.exists(app.config['CTM_USER_CONTENT']):
     os.makedirs(app.config['CTM_USER_CONTENT'])
-app.config['SESSION_TYPE'] = 'filesystem'
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/1'
 app.config['result_backend'] = 'redis://localhost:6379/1'
 
