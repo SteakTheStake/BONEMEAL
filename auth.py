@@ -12,18 +12,18 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    name = request.form.get('name')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=name).first()
 
     if user and user.check_password(password):
         login_user(user, remember=remember)
         return redirect(url_for('app.index'))
     else:
         # If the user doesn't exist, create a new user and log them in
-        new_user = User(email=email, password=generate_password_hash(password, method='pbkdf2:sha256'))
+        new_user = User(name=name, password=generate_password_hash(password, method='pbkdf2:sha256'))
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user, remember=remember)
