@@ -1,6 +1,9 @@
 # models.py
 
-from flask_login import UserMixin, LoginManager
+
+from flask.ext.login import LoginManager
+from flask_login import UserMixin
+
 from __init__ import db
 
 

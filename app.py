@@ -7,7 +7,7 @@ from PIL import Image
 from celery.bin import celery
 from flask import Blueprint, render_template
 from flask import request, session, send_file, jsonify, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 
 from __init__ import create_app
