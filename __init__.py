@@ -2,8 +2,8 @@ import os
 
 from celery import Celery
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
 
 from config import secret_key
 from flask_session import Session
