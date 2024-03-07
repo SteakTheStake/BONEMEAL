@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="float"><a href="javascript:delay('/resize')" id="clickSound"><img src="{{ url_for('static', filename='img/back.png') }}" alt="Back"></a></div>
+    <h1 class="text-center">RESIZE RESULTS | BONEMEAL</h1>
+    <h4 class="text-center">Not satisfied? Click the back button and tweak the settings</h4>
+    <!-- Display Area -->
+    <div id="resultArea" class="mt-4 output">
+        <h1>Resized Images</h1>
+        <a href="/download">Download All Images</a>
+        <div id="countdown"></div>
+        <div id="output-logs">
+            {% for file in files %}
+                <p>Resized {{ file }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- JavaScript for interactive elements -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    window.onload = function() {
+        var remainingSeconds = {{ remaining_seconds }};
+        var countdownElement = document.getElementById('countdown');
+
+        var interval = setInterval(function() {
+            var minutes = Math.floor(remainingSeconds / 60);
+            var seconds = remainingSeconds % 60;
+            countdownElement.innerHTML = minutes + " minutes " + seconds + " seconds until deletion";
+
+            if (remainingSeconds <= 0) {
+                clearInterval(interval);
+                countdownElement.innerHTML = "The files have been deleted.";
+            }
+            remainingSeconds--;
+        }, 1000);
+    };
+</script>
+{% endblock %}

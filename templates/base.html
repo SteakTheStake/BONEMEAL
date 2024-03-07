@@ -43,7 +43,7 @@
         {% endif %}
         <li>
             <a href="{{ url_for('auth.login_post') }}">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-lock"></i>
                 <span>Login</span>
             </a>
         </li>
@@ -93,6 +93,7 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
 <script>
     document.getElementById("year").innerHTML = new Date().getFullYear();
 </script>

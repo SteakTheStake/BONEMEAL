@@ -117,9 +117,9 @@ def resize():
 
         delete_files_after_delay(target_dir, zip_path, delay=deletion_delay)
 
-        return render_template('custom/resize-result.html', files=saved_files, remaining_seconds=remaining_seconds)
+        return render_template('custom/resize/resize-result.html', files=saved_files, remaining_seconds=remaining_seconds)
 
-    return render_template('custom/resize-img.html', files=[])
+    return render_template('custom/resize/resize-img.html', files=[])
 
 
 """ RESIZE END """

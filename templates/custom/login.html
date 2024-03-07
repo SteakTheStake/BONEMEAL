@@ -1,28 +1,35 @@
 {% extends "base.html" %}
 <div id="particles-js"></div>
-<div class="container main">
+<div class="main">
     {% block content %}
-    <form action="" method="post">
-        <div class="form-container">
-            <form class="form">
+        <form action="{{ url_for('auth.login_post') }}" method="post">
+            <div class="form-container">
                 <div class="form-group">
                     <label for="email"><p>User</p>
-                        <input type="text" placeholder="Username" name="username" value="{{
-                        request.form.username }}">
+                        <input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="password">Password
-                    <input type="password" placeholder="Password" name="password" value="{{
-                            request.form.password }}">
+                        <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
                     </label>
                 </div>
+                <div class="form-group">
+                    <div class="checkbox-right">
+                        <input type="checkbox" id="cbx" name="remember" style="display: none;">
+                        <label for="cbx" class="check">Remember:
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
                 <button class="form-submit-btn" type="submit">Login</button>
-            </form>
-        </div>
-    </form>
-    {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
-    {% endif %}
+            </div>
+        </form>
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
+    {% endblock %}
 </div>
-{% endblock %}
