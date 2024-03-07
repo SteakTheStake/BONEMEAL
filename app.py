@@ -3,46 +3,45 @@ import os
 from datetime import datetime, timedelta
 from fileinput import filename
 
-from flask import Flask, request, render_template, session, send_file, jsonify
-from flask_session import Session
+from PIL import Image
+from celery.bin import celery
+from flask import Blueprint, render_template
+from flask import request, session, send_file, jsonify, redirect, url_for
+from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
 
+from __init__ import create_app
 from config import secret_key
 from task import allowed_ctm_file, apply_diffusion_dither, calculate_new_dimensions, zip_directory, \
     delete_files_after_delay, split_and_save_image
-from PIL import Image
-from celery import Celery
-from celery.bin import celery
-from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-if 'SECRET_KEY' in os.environ:
-    app.secret_key = os.environ['SECRET_KEY']
-else:
-    # Generate a new secret key and store it in the environment variable
-    app.secret_key = os.urandom(24)
-    os.environ['SECRET_KEY'] = app.secret_key.hex()
-app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
-app.config['CTM_USER_CONTENT'] = 'user-data'
-if not os.path.exists(app.config['CTM_USER_CONTENT']):
-    os.makedirs(app.config['CTM_USER_CONTENT'])
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/1'
-app.config['result_backend'] = 'redis://localhost:6379/1'
-
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
+app = Blueprint('app', __name__)
 
 
-@app.route('/')
-def home():
+@app.route('/', methods=['GET'])
+def index():
     return render_template('index.html')
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('custom/profile.html', name=current_user.name)
+
+
+@app.route('/settings')
+def settings():
+    return render_template('custom/settings.html')
 
 
 @app.route('/progress')
 def progress():
     return render_template('custom/progress.html')
+
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('custom/login.html')
 
 
 """ RESIZE START """
@@ -184,7 +183,7 @@ def split_ctm():
 @app.route('/ctm_result')
 def ctm_result():
     task_id = session.get('task_id')
-    task = celery.AsyncResult(task_id)
+    task = celery.result(task_id)
     if task.state == 'SUCCESS':
         processed_files = task.result
         zip_filename = f"BONEMEAL_CTM_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
@@ -199,7 +198,7 @@ def ctm_result():
 
 @app.route('/task_status/<task_id>')
 def task_status(task_id):
-    task = celery.AsyncResult(task_id)
+    task = celery.result(task_id)
     if task.state == 'PENDING':
         response = {
             'state': 'PENDING',
@@ -252,6 +251,6 @@ def documentation():
 
 
 if __name__ == '__main__':
+    app = create_app()  # Get the Flask application instance from create_app()
     app.secret_key = secret_key
-    app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0')
+    app.run(host="0.0.0.0")

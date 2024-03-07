@@ -1,62 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- ... (Bootstrap and custom CSS links) ... -->
-    <title>BONEMEAL</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-</head>
-<body>
-<div id="particles-js"></div>
-<div class="container main">
+{% extends "base.html" %}
+
+{% block content %}
     <div class="bonemeal">
-            <div class="row">
-                <div class="col-md-6" id="hoverSound">
-                    <div class="navbar">
-                        <ul id="clickSound" class="menu">
-                            <li><a href="javascript:delay('/resize')" class="Resize">Resize</a></li>
-                            <li><a href="javascript:delay('/split_ctm')" class="Split">Split CTM</a></li>
-                            <li><a href="javascript:delay('#')" class="Move">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="Tile">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="Merge">Soon</a></li>
-                            <li><a href="javascript:delay('#')" class="placeholder">Soon</a></li>
-                            <li><a href="javascript:delay('/documentation')" class="documentation">Docs</a></li>
-                            <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
-                            <li><a href="https://summitmc.xyz/" target="_blank" class="Summit">SummitMC</a></li>
-                        </ul>
-                    </div>
+        <div class="row">
+            <div class="col-md-6" id="hoverSound">
+                <div class="navbar2">
+                    <ul id="clickSound" class="menu">
+                        <li><a href="/resize" class="Resize">Resize</a></li>
+                        <li><a href="/split_ctm" class="Split">Split CTM</a></li>
+                        <li><a href="#" class="Move">Soon</a></li>
+                        <li><a href="#" class="Tile">Soon</a></li>
+                        <li><a href="#" class="Merge">Soon</a></li>
+                        <li><a href="#" class="placeholder">Soon</a></li>
+                        <li><a href="#" class="placeholder">Docs</a></li>
+                        <li><a href="https://discord.gg/M9cmBBGKU8#" target="_blank" class="placeholder">Discord</a></li>
+                        <li><a href="https://summitmc.xyz/" target="_blank" class="placeholder">SummitMC</a></li>
+                    </ul>
                 </div>
             </div>
-            <br>
-            <br>
-                <h1 class="title-center">BONEMEAL</h1>
-                <h3 class="sub-title-center">Speed Up Your Workflow</h3>
-    </div>
-    <footer class="bottom-div">
-        <div class="middle">
-            <div class="nobtn">
-                <p class="half-opacity">"Minecraft" is a trademark of Mojang. This site is not affiliated with Mojang or Microsoft.</p>
-                <p>©&nbsp;<span id="year"></span>&nbsp;Summit. All rights reserved.</p>
-            </div>
         </div>
-    </footer>
-</div>
-<!-- JavaScript for interactive elements -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/particles.js') }}"></script>
-<script src="{{ url_for('static', filename='js/sound.js') }}"></script>
-<script>
-    document.getElementById("year").innerHTML = new Date().getFullYear();
-</script>
-</body>
-</html>
+        <br>
+        <br>
+        <br>
+        <h1 class="title-center">BONEMEAL</h1>
+        <h3 class="sub-title-center">Speed Up Your Workflow</h3>
+        <div id="flashingtext">Beta 0.0.1</div>
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+
+    <div class="bonemeal">
+            <div class="row">
+                <div class="col-md-6" id="hoverSound">
+                    <div class="navbar">
+                        <ul id="clickSound" class="menu">
+                            <li><a href="javascript:delay({{ url_for('app.index') }})" class="Resize">Home</a></li>
+                            <li><a href="javascript:delay({{ url_for('app.profile') }})" class="Split">Profile</a></li>
+                            <li><a href="javascript:delay({{ url_for('auth.login') }})" class="Move">Login</a></li>
+                            <li><a href="javascript:delay({{ url_for('auth.logout') }})" class="Tile">Logout</a></li>
+                            <li><a href="javascript:delay('/documentation')" class="documentation">Docs</a></li>
+                            <li><a href="https://discord.gg/M9cmBBGKU8" target="_blank" class="placeholder">Discord</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+                <h1 class="title-center">BONEMEAL</h1>
+                <h3 class="sub-title-center">Speed Up Your Workflow</h3>
+    </div>
+
+
+
+
+    {% extends "base.html" %}
+        {% block content %}
+        <div class="bonemeal">
+                <div class="row">
+                    <div class="col-md-6" id="hoverSound">
+                        <div class="navbar">
+                            <ul id="clickSound" class="menu">
+                                <li><a href="javascript:delay('/resize')" class="Resize">Resize</a></li>
+                                <li><a href="javascript:delay('/split_ctm')" class="Split">Split CTM</a></li>
+                                <li><a href="javascript:delay('#')" class="Move">Soon</a></li>
+                                <li><a href="javascript:delay('#')" class="Tile">Soon</a></li>
+                                <li><a href="javascript:delay('#')" class="Merge">Soon</a></li>
+                                <li><a href="javascript:delay('#')" class="placeholder">Soon</a></li>
+                                <li><a href="javascript:delay('#')" class="placeholder">Docs</a></li>
+                                <li><a href="javascript:delay('#')" class="placeholder">Discord</a></li>
+                                <li><a href="javascript:delay('#')" class="placeholder">SummitMC</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                    <h1 class="title-center">BONEMEAL</h1>
+                    <h3 class="sub-title-center">Speed Up Your Workflow</h3>
+        </div>
+    {% endblock %}
+
+    {{ url_for('app.index') }}
+    {{ url_for('app.profile') }}
+    {{ url_for('auth.login') }}
+    {{ url_for('auth.logout') }}

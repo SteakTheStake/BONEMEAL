@@ -104,7 +104,7 @@ canvas {
 
 .bonemeal {
     position: relative;
-    top: 70%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) translateY(50%) scale(1.5);
     animation: splash 5s normal forwards ease-in-out;

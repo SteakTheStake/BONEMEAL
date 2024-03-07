@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (Bootstrap and custom CSS links) ... -->
+    <title>BONEMEAL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main-style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='fontawesome-free-6.5.1-web/css/solid.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='fontawesome-free-6.5.1-web/css/all.css') }}" rel="stylesheet">
+
+
+    <!-- Discord Meta Tags -->
+    <meta content="https://bonemeal.summitmc.xyz/" property="og:url">
+    <meta content="https://i.imgur.com/4xCQpaq.png" property="og:image">
+    <meta content="Bonemeal" property="og:title">
+    <meta content="Speed Up Your Workflow" property="og:description">
+    <meta content="#290b6b" data-react-helmet="true" name="theme-color">
+    <meta name="twitter:card" content="https://i.imgur.com/4qC6CVd.jpeg">
+</head>
+<body>
+<div id="particles-js"></div>
+<div class="navbar nav-0">
+    <ul>
+        <li>
+            <a href="{{ url_for('app.index') }}">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        {% if current_user.is_authenticated %}
+            <li>
+                <a href="{{ url_for('app.profile') }}">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ url_for('auth.login_post') }}">
+                <i class="fa-solid fa-arrow-right"></i>
+                <span>Login</span>
+            </a>
+        </li>
+        {% if current_user.is_authenticated %}
+            <li>
+                <a href="{{ url_for('auth.logout') }}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ url_for('auth.settings') }}">
+                <i class="fa-solid fa-bars"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="container main">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+<details>
+    <summary>Whats Bonemeal<i class="fa-solid fa-question"></i></summary>
+    <div>
+        <h1>BONEMEAL</h1>
+        <p>Speed Up Your Workflow</p>
+        <h2>Who We Are</h2>
+        <p>Bonemeal is a resource created by texture enthusiasts, for texture enthusiasts. We understand the unique challenges and joys of designing Minecraft texture packs. Our mission is to offer a wide range of helpful tools for Minecraft texture pack devs, whether they're just starting out or already well established.</p>
+        <h2>What We Do</h2>
+        <p>Bonemeal provides a toolkit specifically tailored for Minecraft texture pack creation. We offer tools to simplify the process, streamline workflow, and help you achieve the results you envision.</p>
+
+        <h2>Our Expertise</h2>
+        <p>Our team has a deep appreciation for Minecraft's visual style and a passion for empowering creators within the community. We combine our knowledge of the game with technical understanding to provide tools that enhance the development experience.</p>
+
+    </div>
+</details>
+<!-- JavaScript for interactive elements -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+<script>
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+</script>
+</body>
+</html>

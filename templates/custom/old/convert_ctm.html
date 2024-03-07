@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (Bootstrap and custom CSS links) ... -->
+    <title>BONEMEAL | Speed Up Your Workflow</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="float"><a href="/"><img src="static/img/back.png" alt="Logo"></a></div>
+    <h1 class="text-center">RESIZE | BONEMEAL</h1>
+    <h4 class="text-center">Resize textures in bulk and convert then to indexed color for better in-game performance</h4>
+    <!-- File Upload -->
+    <form action="/resize" method="post" enctype="multipart/form-data" id="resizeForm">
+        <div class="form-group">
+            <label for="fileUpload">Upload texture files:</label>
+            <input type="file" class="form-control-file" id="fileUpload" name="files" multiple>
+        </div>
+        <div class="form-group">
+            <label for="percentageInput">Resize Percentage:</label>
+            <input type="number" class="form-control" id="percentageInput" name="percentage" min="1" max="100" step="1" value="50">
+        </div>
+        <button type="submit" class="btn btn-primary">Start Resizing</button>
+    </form>
+    <!-- Display Area -->
+    <div id="resultArea" class="mt-4">
+        {% for image_url in images %}
+            <img src="{{ image_url }}" alt="Resized Image">
+        {% endfor %}
+    </div>
+    <!-- Log Display Area -->
+    <div id="logArea" class="mt-4">
+        <h3>Activity Log</h3>
+        <div id="logs"></div>
+    </div>
+
+</div>
+<!-- JavaScript for interactive elements -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    function addLog(message) {
+        var logDiv = document.getElementById('logs');
+        var time = new Date().toLocaleTimeString();
+        logDiv.innerHTML += `<p>[${time}] ${message}</p>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addLog('Page loaded');
+
+        var fileInput = document.getElementById('fileUpload');
+        fileInput.addEventListener('change', function() {
+            var uploadedFiles = fileInput.files;
+            if (uploadedFiles.length > 0) {
+                var fileNames = Array.from(uploadedFiles).map(file => file.name).join(', ');
+                addLog(`Files uploaded: ${fileNames}`);
+            } else {
+                addLog('No files selected');
+            }
+        });
+
+        document.getElementById('resizeForm').addEventListener('submit', function() {
+            addLog('Form submitted');
+            // Additional actions or logs can be added here
+        });
+    });
+</script>
+</body>
+</html>
